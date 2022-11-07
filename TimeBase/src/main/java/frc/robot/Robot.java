@@ -12,22 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-//defining motors
-CANSparkMax frontLeftMotor;
-CANSparkMax backLeftMotor;
-CANSparkMax frontRightMotor;
-CANSparkMax backRightMotor;
 
-CANSparkMax shooterMotor;
-CANSparkMax uptakeMotor;
-
-RelativeEncoder frontLeftMotorEncoder;
-RelativeEncoder backLeftMotorEncoder;
-RelativeEncoder frontRightMotorEncoder;
-RelativeEncoder backRightMotorEncoder;
-
-RelativeEncoder shooterMotorEncoder;
-RelativeEncoder uptakeMotorEncoder;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -40,7 +25,22 @@ public class Robot extends TimedRobot {
   private static final String kCustomAuto = "My Auto";
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
+  //defining motors
+  CANSparkMax frontLeftMotor;
+  CANSparkMax backLeftMotor;
+  CANSparkMax frontRightMotor;
+  CANSparkMax backRightMotor;
 
+  CANSparkMax shooterMotor;
+  CANSparkMax uptakeMotor;
+
+  RelativeEncoder frontLeftMotorEncoder;
+  RelativeEncoder backLeftMotorEncoder;
+  RelativeEncoder frontRightMotorEncoder;
+  RelativeEncoder backRightMotorEncoder;
+
+  RelativeEncoder shooterMotorEncoder;
+  RelativeEncoder uptakeMotorEncoder;
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
