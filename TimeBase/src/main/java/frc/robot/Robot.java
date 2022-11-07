@@ -116,4 +116,12 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during test mode. */
   @Override
   public void testPeriodic() {}
+
+  //examples of functions to add!
+
+  public void SetMotors(double Speed, CANSparkMax[] MotorArray) {
+    for (CANSparkMax Motor :MotorArray) {
+      Motor.set(Speed);
+    }
+  }
 }
