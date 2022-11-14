@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import edu.wpi.first.wpilibj.XboxController
 
 
 /**
@@ -41,6 +42,10 @@ public class Robot extends TimedRobot {
 
   RelativeEncoder shooterMotorEncoder;
   RelativeEncoder uptakeMotorEncoder;
+  
+  XboxController xcontroll;
+
+  
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -99,8 +104,37 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() {}
-
+  public void teleopPeriodic() {
+    double lefttrain = xcontroll.getLeftY()
+    double righttrain = xcontroll.getRightY()
+    double intake = xcontroll.getLeftTriggerAxis()
+    double miduptakeshooter = xcontroll.getRightTriggerAxis()
+    boolean invert = xcontroll.getStartButton()
+    boolean revinmid = xcontrol.getYButton()
+    boolean revmidupshoot = xcontrol.getXButton()
+    if intake != 0 {
+      /** Turn on the intake/midtake */
+    }
+    if miduptakeshooter != 0 {
+      /** Midtake, uptake, and shooter */
+    }
+    if invert == true {
+      /** Invert drivetrain */
+    }
+    if revinmid == true {
+      /** Reverse Intake and Midtake */
+    }
+    if revmidupshoot == true {
+      /** Reverse midtake, uptake, and shooter */
+    }
+    if lefttrain != 0 {
+      /** Turn on left drivetrain with the lefttrain value */
+    }
+    if righttrain != 0 {
+      /** Turn on right drivetrain with the righttrain value */
+    }
+  }
+  
   /** This function is called once when the robot is disabled. */
   @Override
   public void disabledInit() {}
@@ -124,4 +158,5 @@ public class Robot extends TimedRobot {
       Motor.set(Speed);
     }
   }
+  
 }
