@@ -13,8 +13,11 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.XboxController;
+<<<<<<< HEAD
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+=======
+>>>>>>> 4564c298b5c6578ab86520a08f0494ccb8d835ba
 
 
 /**
@@ -107,33 +110,39 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    double lefttrain = xcontroll.getLeftY()
-    double righttrain = xcontroll.getRightY()
-    double intake = xcontroll.getLeftTriggerAxis()
-    double miduptakeshooter = xcontroll.getRightTriggerAxis()
-    boolean invert = xcontroll.getStartButton()
-    boolean revinmid = xcontrol.getYButton()
-    boolean revmidupshoot = xcontrol.getXButton()
-    if intake != 0 {
+    double lefttrain = xcontroll.getLeftY();
+    double righttrain = xcontroll.getRightY();
+    double intake = xcontroll.getLeftTriggerAxis();
+    double miduptakeshooter = xcontroll.getRightTriggerAxis();
+    boolean invert = xcontroll.getStartButton();
+    boolean revinmid = xcontroll.getYButton();
+    boolean revmidupshoot = xcontroll.getXButton();
+    if (deadzone(intake) != 0) {
       /** Turn on the intake/midtake */
     }
-    if miduptakeshooter != 0 {
+    if (deadzone(miduptakeshooter) != 0) {
       /** Midtake, uptake, and shooter */
     }
-    if invert == true {
+    if (invert == true) {
       /** Invert drivetrain */
     }
-    if revinmid == true {
+    if (revinmid == true) {
       /** Reverse Intake and Midtake */
     }
-    if revmidupshoot == true {
+    if (revmidupshoot == true) {
       /** Reverse midtake, uptake, and shooter */
     }
-    if lefttrain != 0 {
-      /** Turn on left drivetrain with the lefttrain value */
+    if (deadzone(lefttrain) != 0) {
+      frontLeftMotor.set(lefttrain);
+      backLeftMotor.set(lefttrain)
     }
-    if righttrain != 0 {
-      /** Turn on right drivetrain with the righttrain value */
+    if (deazone(righttrain) != 0) {
+      frontRightMotor.set(righttrain);
+      backRightMotor.set(righttrain);
+    }
+    public double deadzone(double doubleArgument) {
+      if(Math.abs(doubleArgument) < .15) return 0;
+      else return doubleArgument;
     }
   }
   
