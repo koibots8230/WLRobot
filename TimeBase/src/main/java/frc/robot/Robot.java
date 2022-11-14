@@ -112,10 +112,10 @@ public class Robot extends TimedRobot {
     boolean invert = xcontroll.getStartButton();
     boolean revinmid = xcontroll.getYButton();
     boolean revmidupshoot = xcontroll.getXButton();
-    if (intake != 0) {
+    if (deadzone(intake) != 0) {
       /** Turn on the intake/midtake */
     }
-    if (miduptakeshooter != 0) {
+    if (deadzone(miduptakeshooter) != 0) {
       /** Midtake, uptake, and shooter */
     }
     if (invert == true) {
@@ -127,11 +127,17 @@ public class Robot extends TimedRobot {
     if (revmidupshoot == true) {
       /** Reverse midtake, uptake, and shooter */
     }
-    if (lefttrain != 0) {
-      /** Turn on left drivetrain with the lefttrain value */
+    if (deadzone(lefttrain) != 0) {
+      frontLeftMotor.set(lefttrain);
+      backLeftMotor.set(lefttrain)
     }
-    if (righttrain != 0) {
-      /** Turn on right drivetrain with the righttrain value */
+    if (deazone(righttrain) != 0) {
+      frontRightMotor.set(righttrain);
+      backRightMotor.set(righttrain);
+    }
+    public double deadzone(double doubleArgument) {
+      if(Math.abs(doubleArgument) < .15) return 0;
+      else return doubleArgument;
     }
   }
   
@@ -158,4 +164,5 @@ public class Robot extends TimedRobot {
       Motor.set(Speed);
     }
   }
+  
 }
