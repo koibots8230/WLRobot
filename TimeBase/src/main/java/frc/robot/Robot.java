@@ -13,11 +13,6 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.XboxController;
-<<<<<<< HEAD
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-=======
->>>>>>> 4564c298b5c6578ab86520a08f0494ccb8d835ba
 
 
 /**
@@ -110,6 +105,7 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
+    //defining the motors
     double lefttrain = xcontroll.getLeftY();
     double righttrain = xcontroll.getRightY();
     double intake = xcontroll.getLeftTriggerAxis();
@@ -134,16 +130,13 @@ public class Robot extends TimedRobot {
     }
     if (deadzone(lefttrain) != 0) {
       frontLeftMotor.set(lefttrain);
-      backLeftMotor.set(lefttrain)
+      backLeftMotor.set(lefttrain);
     }
-    if (deazone(righttrain) != 0) {
+    if (deadzone(righttrain) != 0) {
       frontRightMotor.set(righttrain);
       backRightMotor.set(righttrain);
     }
-    public double deadzone(double doubleArgument) {
-      if(Math.abs(doubleArgument) < .15) return 0;
-      else return doubleArgument;
-    }
+
   }
   
   /** This function is called once when the robot is disabled. */
@@ -169,5 +162,8 @@ public class Robot extends TimedRobot {
       Motor.set(Speed);
     }
   }
-  
+  public double deadzone(double doubleArgument) {
+    if(Math.abs(doubleArgument) < .15) return 0;
+    else return doubleArgument;
+  }
 }
