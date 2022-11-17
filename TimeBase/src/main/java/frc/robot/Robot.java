@@ -14,6 +14,8 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.XboxController;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -102,7 +104,8 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {}
 
-  /** This function is called periodically during operator control. */
+  /** This function is called periodically during operator control. 
+   * @return */
   @Override
   public void teleopPeriodic() {
     //defining the motors
@@ -113,10 +116,10 @@ public class Robot extends TimedRobot {
     boolean invert = xcontroll.getStartButton();
     boolean revinmid = xcontroll.getYButton();
     boolean revmidupshoot = xcontroll.getXButton();
-    if (deadzone(intake) != 0) {
+    if (Math.abs(intake) > .15) {
       /** Turn on the intake/midtake */
     }
-    if (deadzone(miduptakeshooter) != 0) {
+    if (Math.abs(miduptakeshooter) > .15) {
       /** Midtake, uptake, and shooter */
     }
     if (invert == true) {
@@ -128,17 +131,24 @@ public class Robot extends TimedRobot {
     if (revmidupshoot == true) {
       /** Reverse midtake, uptake, and shooter */
     }
-    if (deadzone(lefttrain) != 0) {
+    if (Math.abs(lefttrain) > .15) {
       frontLeftMotor.set(lefttrain);
-      backLeftMotor.set(lefttrain);
+      backLeftMotor.set(lefttrain)
     }
-    if (deadzone(righttrain) != 0) {
+    if (deazone(righttrain) != 0) {
       frontRightMotor.set(righttrain);
       backRightMotor.set(righttrain);
     }
-
+    public double deadzone(double doubleArgument) {
+      if(Math.abs(doubleArgument) < .15) return 0;
+      else return doubleArgument;
+    }
   }
   
+
+
+
+
   /** This function is called once when the robot is disabled. */
   @Override
   public void disabledInit() {}
