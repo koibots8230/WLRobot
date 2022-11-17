@@ -10,12 +10,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //revrobotics imports
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.RelativeEncoder;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.XboxController;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.*;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -29,21 +26,10 @@ public class Robot extends TimedRobot {
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
   //defining motors
-  CANSparkMax frontLeftMotor;
-  CANSparkMax backLeftMotor;
-  CANSparkMax frontRightMotor;
-  CANSparkMax backRightMotor;
-
-  CANSparkMax shooterMotor;
-  CANSparkMax uptakeMotor;
-
-  RelativeEncoder frontLeftMotorEncoder;
-  RelativeEncoder backLeftMotorEncoder;
-  RelativeEncoder frontRightMotorEncoder;
-  RelativeEncoder backRightMotorEncoder;
-
-  RelativeEncoder shooterMotorEncoder;
-  RelativeEncoder uptakeMotorEncoder;
+  WPI_TalonSRX frontLeftMotor = new WPI_TalonSRX(2);
+  WPI_TalonSRX backLeftMotor = new WPI_TalonSRX(0);
+  WPI_TalonSRX frontRightMotor = new WPI_TalonSRX(3);
+  WPI_TalonSRX backRightMotor = new WPI_TalonSRX(1);
   
   XboxController xcontroll;
 
@@ -131,13 +117,20 @@ public class Robot extends TimedRobot {
     if (revmidupshoot == true) {
       /** Reverse midtake, uptake, and shooter */
     }
+    //esle condition is to make sure they dont run when controls are not being pressed
     if (Math.abs(lefttrain) > .15) {
       frontLeftMotor.set(lefttrain);
       backLeftMotor.set(lefttrain);
+    } else {
+      frontLeftMotor.set(0);
+      backLeftMotor.set(0);
     }
-    if (deazone(righttrain) != 0) {
+    if (deadzone(righttrain) != 0) {
       frontRightMotor.set(righttrain);
       backRightMotor.set(righttrain);
+    } else {
+      frontRightMotor.set(0);
+      backRightMotor.set(0);
     }
   }
   
