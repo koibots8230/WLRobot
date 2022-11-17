@@ -133,15 +133,11 @@ public class Robot extends TimedRobot {
     }
     if (Math.abs(lefttrain) > .15) {
       frontLeftMotor.set(lefttrain);
-      backLeftMotor.set(lefttrain)
+      backLeftMotor.set(lefttrain);
     }
     if (deazone(righttrain) != 0) {
       frontRightMotor.set(righttrain);
       backRightMotor.set(righttrain);
-    }
-    public double deadzone(double doubleArgument) {
-      if(Math.abs(doubleArgument) < .15) return 0;
-      else return doubleArgument;
     }
   }
   
