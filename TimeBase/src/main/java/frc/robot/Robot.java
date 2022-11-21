@@ -12,6 +12,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.revrobotics.CANSparkMax;
 import edu.wpi.first.wpilibj.XboxController;
 
+import javax.swing.text.html.HTMLDocument.HTMLReader.IsindexAction;
+
 import com.ctre.phoenix.motorcontrol.can.*;
 
 /**
@@ -25,14 +27,26 @@ public class Robot extends TimedRobot {
   private static final String kCustomAuto = "My Auto";
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
+  //temporary numbers
+  int intakenumber = 4;
+  int shooternumber = 5;
   //defining motors
   WPI_TalonSRX frontLeftMotor = new WPI_TalonSRX(2);
   WPI_TalonSRX backLeftMotor = new WPI_TalonSRX(0);
   WPI_TalonSRX frontRightMotor = new WPI_TalonSRX(3);
   WPI_TalonSRX backRightMotor = new WPI_TalonSRX(1);
+  WPI_TalonSRX intakeMotor = new WPI_TalonSRX(intakenumber);
+  WPI_TalonSRX uptakeShooterMotor = new WPI_TalonSRX(shooternumber);
   
   XboxController xcontroll;
 
+  boolean isInverted = false;
+  boolean isInRev = false;
+  boolean isShootRev = false;
+  double intakeSpeed = 0.5;
+  double shooterSpeed = 0.5;
+  
+  
   
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -88,7 +102,9 @@ public class Robot extends TimedRobot {
 
   /** This function is called once when teleop is enabled. */
   @Override
-  public void teleopInit() {}
+  public void teleopInit() {
+    
+  }
 
   /** This function is called periodically during operator control. 
    * @return */
@@ -98,25 +114,50 @@ public class Robot extends TimedRobot {
     double lefttrain = xcontroll.getLeftY();
     double righttrain = xcontroll.getRightY();
     double intake = xcontroll.getLeftTriggerAxis();
-    double miduptakeshooter = xcontroll.getRightTriggerAxis();
+    double shoot = xcontroll.getRightTriggerAxis();
     boolean invert = xcontroll.getStartButton();
     boolean revinmid = xcontroll.getYButton();
-    boolean revmidupshoot = xcontroll.getXButton();
-    if (Math.abs(intake) > .15) {
-      /** Turn on the intake/midtake */
+    boolean revshoot = xcontroll.getXButton();
+    if (revinmid == true) {
+      if (isInRev == true) {
+        isInRev = false;
+        intakeSpeed *= -1;
+      } else if (isInRev == false) {
+        isInRev = true;
+        intakeSpeed *= -1;
+      }
     }
-    if (Math.abs(miduptakeshooter) > .15) {
-      /** Midtake, uptake, and shooter */
+    if (revshoot == true) {
+      if (isShootRev == true) {
+        isShootRev = false;
+        shooterSpeed *= -1;
+      } else if (isShootRev == false) {
+        isShootRev = true;
+        shooterSpeed *= -1;
+      }
+    }
+    if (Math.abs(intake) > .15) {
+      intakeMotor.set(intakeSpeed);
+    } else {
+      intakeMotor.set(0);
+    }
+    if (Math.abs(shoot) > .15) {
+      uptakeShooterMotor.set(shooterSpeed);
+    } else {
+      uptakeShooterMotor.set(0);
     }
     if (invert == true) {
-      /** Invert drivetrain */
+      if (isInverted == true) {
+        isInverted = false;
+      } else if (isInverted == false) {
+        isInverted = true;
+      }
     }
-    if (revinmid == true) {
-      /** Reverse Intake and Midtake */
+    if (isInverted == true) {
+      lefttrain *= -1;
+      righttrain *= -1;
     }
-    if (revmidupshoot == true) {
-      /** Reverse midtake, uptake, and shooter */
-    }
+    
     //esle condition is to make sure they dont run when controls are not being pressed
     if (Math.abs(lefttrain) > .15) {
       frontLeftMotor.set(lefttrain);
