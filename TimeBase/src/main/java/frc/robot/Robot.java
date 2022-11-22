@@ -158,21 +158,12 @@ public class Robot extends TimedRobot {
       righttrain *= -1;
     }
     
-    //esle condition is to make sure they dont run when controls are not being pressed
-    if (Math.abs(lefttrain) > .15) {
-      frontLeftMotor.set(lefttrain);
-      backLeftMotor.set(lefttrain);
-    } else {
-      frontLeftMotor.set(0);
-      backLeftMotor.set(0);
-    }
-    if (deadzone(righttrain) != 0) {
-      frontRightMotor.set(righttrain);
-      backRightMotor.set(righttrain);
-    } else {
-      frontRightMotor.set(0);
-      backRightMotor.set(0);
-    }
+    //set left motors, set to zero if joystick is inside the deadzone
+    frontLeftMotor.set(deadzone(lefttrain));
+    backLeftMotor.set(deadzone(lefttrain));
+    //set right motors, set to zero if joystick is inside the deadzone.
+    frontRightMotor.set(deadzone(righttrain));
+    backRightMotor.set(deadzone(righttrain));
   }
   
 
