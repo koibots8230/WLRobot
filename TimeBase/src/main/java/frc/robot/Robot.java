@@ -118,7 +118,7 @@ public class Robot extends TimedRobot {
     boolean invert = xcontroll.getStartButton();
     boolean revinmid = xcontroll.getYButton();
     boolean revshoot = xcontroll.getXButton();
-    if (revinmid == true) {
+    if (revinmid == true) {//?
       if (isInRev == true) {
         isInRev = false;
         intakeSpeed *= -1;
@@ -127,7 +127,7 @@ public class Robot extends TimedRobot {
         intakeSpeed *= -1;
       }
     }
-    if (revshoot == true) {
+    if (revshoot == true) {//?
       if (isShootRev == true) {
         isShootRev = false;
         shooterSpeed *= -1;
@@ -136,24 +136,24 @@ public class Robot extends TimedRobot {
         shooterSpeed *= -1;
       }
     }
-    if (Math.abs(intake) > .15) {
-      intakeMotor.set(intakeSpeed);
+    if (Math.abs(intake) > .15) {//is left trigger value greater than .15?
+      intakeMotor.set(intakeSpeed);//yes: then set intake motor
     } else {
-      intakeMotor.set(0);
+      intakeMotor.set(0);//no, turn off intake motor
     }
-    if (Math.abs(shoot) > .15) {
-      uptakeShooterMotor.set(shooterSpeed);
+    if (Math.abs(shoot) > .15) {//is right trigger value greater than .15?
+      uptakeShooterMotor.set(shooterSpeed);//yes: then set shooter motor
     } else {
-      uptakeShooterMotor.set(0);
+      uptakeShooterMotor.set(0);//no: turn off shooter motor
     }
-    if (invert == true) {
+    if (invert == true) {//toggle inversion?
       if (isInverted == true) {
         isInverted = false;
       } else if (isInverted == false) {
         isInverted = true;
       }
     }
-    if (isInverted == true) {
+    if (isInverted == true) {//actually inverts the controls.
       lefttrain *= -1;
       righttrain *= -1;
     }
