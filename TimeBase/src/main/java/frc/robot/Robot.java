@@ -27,6 +27,8 @@ public class Robot extends TimedRobot {
   private static final String kCustomAuto = "My Auto";
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
+  public static final double DEADZONE = .15;//should this be private?
+  //so that we only have to change one number instead of 5
   //temporary numbers
   int intakenumber = 4;
   int shooternumber = 5;
@@ -136,12 +138,12 @@ public class Robot extends TimedRobot {
         shooterSpeed *= -1;
       }
     }
-    if (Math.abs(intake) > .15) {//is left trigger value greater than .15?
+    if (Math.abs(intake) > DEADZONE) {//is left trigger value greater than .15?
       intakeMotor.set(intakeSpeed);//yes: then set intake motor
     } else {
       intakeMotor.set(0);//no, turn off intake motor
     }
-    if (Math.abs(shoot) > .15) {//is right trigger value greater than .15?
+    if (Math.abs(shoot) > DEADZONE) {//is right trigger value greater than .15?
       uptakeShooterMotor.set(shooterSpeed);//yes: then set shooter motor
     } else {
       uptakeShooterMotor.set(0);//no: turn off shooter motor
@@ -157,7 +159,6 @@ public class Robot extends TimedRobot {
       lefttrain *= -1;
       righttrain *= -1;
     }
-    
     //set left motors, set to zero if joystick is inside the deadzone
     frontLeftMotor.set(deadzone(lefttrain));
     backLeftMotor.set(deadzone(lefttrain));
@@ -194,7 +195,7 @@ public class Robot extends TimedRobot {
     }
   }
   public double deadzone(double doubleArgument) {
-    if(Math.abs(doubleArgument) < .15) return 0;
+    if(Math.abs(doubleArgument) < DEADZONE) return 0;
     else return doubleArgument;
   }
 }
