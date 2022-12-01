@@ -31,7 +31,7 @@ public class Robot extends TimedRobot {
   //so that we only have to change one number instead of 5
   //temporary numbers
   int intakenumber = 4;
-  int shooternumber = 5;
+  int shooternumber = 15;
   //defining motors
   WPI_TalonSRX frontLeftMotor = new WPI_TalonSRX(2);
   WPI_TalonSRX backLeftMotor = new WPI_TalonSRX(0);
