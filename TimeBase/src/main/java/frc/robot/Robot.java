@@ -45,8 +45,8 @@ public class Robot extends TimedRobot {
   boolean isInverted = false;
   boolean isInRev = false;
   boolean isShootRev = false;
-  double intakeSpeed = 0.5;
-  double shooterSpeed = 0.5;
+  double INTAKE_SPEED = 0.5;
+  double SHOOTER_SPEED = 0.5;
   
   
   
@@ -123,28 +123,28 @@ public class Robot extends TimedRobot {
     if (revinmid == true) {//if the y button is pressed
       if (isInRev == true) {//if the toggle is on
         isInRev = false;//set the toggle to off
-        intakeSpeed *= -1;//unreverse the speed
+        INTAKE_SPEED *= -1;//unreverse the speed
       } else if (isInRev == false) {//if the toggle is off
         isInRev = true;//turn the toggle on
-        intakeSpeed *= -1;//reverse the speed
+        INTAKE_SPEED *= -1;//reverse the speed
       }
     }
     if (revshoot == true) {//if the x button is pressed
       if (isShootRev == true) {//if the toggle is on
         isShootRev = false;//turn the toggle off
-        shooterSpeed *= -1;//unreverse the speed
+        SHOOTER_SPEED *= -1;//unreverse the speed
       } else if (isShootRev == false) {//if the toggle is off
         isShootRev = true;//turn the toggle on
-        shooterSpeed *= -1;//reverse the speed
+        SHOOTER_SPEED *= -1;//reverse the speed
       }
     }
     if (Math.abs(intake) > DEADZONE) {//is left trigger value greater than .15?
-      intakeMotor.set(intakeSpeed);//yes: then set intake motor
+      intakeMotor.set(INTAKE_SPEED);//yes: then set intake motor
     } else {
       intakeMotor.set(0);//no, turn off intake motor
     }
     if (Math.abs(shoot) > DEADZONE) {//is right trigger value greater than .15?
-      uptakeShooterMotor.set(shooterSpeed);//yes: then set shooter motor
+      uptakeShooterMotor.set(SHOOTER_SPEED);//yes: then set shooter motor
     } else {
       uptakeShooterMotor.set(0);//no: turn off shooter motor
     }
