@@ -183,6 +183,7 @@ public class Robot extends TimedRobot {
       Motor.set(Speed);
     }
   }
+  /** This function returns 0 if the parameter's value is less than DEADZONE*/
   public double deadzone(double doubleArgument) {
     if(Math.abs(doubleArgument) < DEADZONE) return 0;
     else return doubleArgument;
