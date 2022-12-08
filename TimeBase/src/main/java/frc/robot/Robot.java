@@ -187,5 +187,4 @@ public class Robot extends TimedRobot {
     if(Math.abs(doubleArgument) < DEADZONE) return 0;
     else return doubleArgument;
   }
-  public void
 }
