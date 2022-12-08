@@ -3,13 +3,22 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.subsystems;
-
+import com.ctre.phoenix.motorcontrol.can.*;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ShootUp extends SubsystemBase {
-  /** Creates a new ShootUp. */
-  public ShootUp() {}
 
+  private final WPI_TalonSRX shooterMotor;
+  /** Creates a new ShootUp. */
+  public ShootUp() {
+    shooterMotor = new WPI_TalonSRX(15);
+  }
+  public void turnOnMotor(){
+    shooterMotor.set(1);
+  }
+  public void turnOffMotor(){
+    shooterMotor.set(0);
+  }
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
