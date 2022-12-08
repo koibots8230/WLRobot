@@ -121,22 +121,12 @@ public class Robot extends TimedRobot {
     boolean revinmid = xcontroll.getYButton();
     boolean revshoot = xcontroll.getXButton();
     if (revinmid == true) {//if the y button is pressed
-      if (isInRev == true) {//if the toggle is on
-        isInRev = false;//set the toggle to off
-        INTAKE_SPEED *= -1;//unreverse the speed
-      } else if (isInRev == false) {//if the toggle is off
-        isInRev = true;//turn the toggle on
+        isInRev = !isInRev;//sets it false if true, and true is false.
         INTAKE_SPEED *= -1;//reverse the speed
-      }
     }
     if (revshoot == true) {//if the x button is pressed
-      if (isShootRev == true) {//if the toggle is on
-        isShootRev = false;//turn the toggle off
-        SHOOTER_SPEED *= -1;//unreverse the speed
-      } else if (isShootRev == false) {//if the toggle is off
-        isShootRev = true;//turn the toggle on
-        SHOOTER_SPEED *= -1;//reverse the speed
-      }
+      isShootRev = !isShootRev;//sets it false if true, and true is false.
+      SHOOTER_SPEED *= -1;//reverse the speed
     }
     if (Math.abs(intake) > DEADZONE) {//is left trigger value greater than .15?
       intakeMotor.set(INTAKE_SPEED);//yes: then set intake motor
@@ -149,11 +139,7 @@ public class Robot extends TimedRobot {
       uptakeShooterMotor.set(0);//no: turn off shooter motor
     }
     if (invert == true) {//if the start button is pressed
-      if (isInverted == true) {//if the toggle is on
-        isInverted = false;//turn the toggle off
-      } else if (isInverted == false) {//if the toggle is off
-        isInverted = true;//turn the toggle on
-      }
+      isInverted=!isInverted;//sets it false if true, and true is false.
     }
     if (isInverted == true) {//actually inverts the controls.
       lefttrain *= -1;
