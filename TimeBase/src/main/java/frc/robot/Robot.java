@@ -138,13 +138,16 @@ public class Robot extends TimedRobot {
     } else {
       uptakeShooterMotor.set(0);//no: turn off shooter motor
     }
+    //Depending on how often this runs the inverting code might be inconsitent at working.
     if (invert == true) {//if the start button is pressed
       isInverted=!isInverted;//sets it false if true, and true is false.
     }
-    if (isInverted == true) {//actually inverts the controls.
-      lefttrain *= -1;
-      righttrain *= -1;
-    }
+    //the old code for inverting the drive train would invert the drive train, every time this function is called, not what we want.
+    //inverts the drive train motors.
+    frontLeftMotor.setInverted(isInverted);
+    backLeftMotor.setInverted(isInverted);
+    frontRightMotor.setInverted(isInverted);
+    backRightMotor.setInverted(isInverted);
     //set left motors, set to zero if joystick is inside the deadzone
     frontLeftMotor.set(deadzone(lefttrain));
     backLeftMotor.set(deadzone(lefttrain));
