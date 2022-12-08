@@ -142,7 +142,7 @@ public class Robot extends TimedRobot {
     if (invert == true) {//if the start button is pressed
       isInverted=!isInverted;//sets it false if true, and true is false.
     }
-    //the old code for inverting the drive train would invert the drive train, every time this function is called, not what we want.
+    //the old code for inverting the drive train would invert the drive train, but couldn't revert the drive train, not what we want.
     //inverts the drive train motors.
     frontLeftMotor.setInverted(isInverted);
     backLeftMotor.setInverted(isInverted);
@@ -187,4 +187,5 @@ public class Robot extends TimedRobot {
     if(Math.abs(doubleArgument) < DEADZONE) return 0;
     else return doubleArgument;
   }
+  public void
 }
