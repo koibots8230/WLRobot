@@ -27,9 +27,11 @@ public class Robot extends TimedRobot {
   private static final String kCustomAuto = "My Auto";
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
+  public static final double DEADZONE = .15;//should this be private?
+  //so that we only have to change one number instead of 5
   //temporary numbers
   int intakenumber = 4;
-  int shooternumber = 5;
+  int shooternumber = 15;
   //defining motors
   WPI_TalonSRX frontLeftMotor = new WPI_TalonSRX(2);
   WPI_TalonSRX backLeftMotor = new WPI_TalonSRX(0);
@@ -43,8 +45,8 @@ public class Robot extends TimedRobot {
   boolean isInverted = false;
   boolean isInRev = false;
   boolean isShootRev = false;
-  double intakeSpeed = 0.5;
-  double shooterSpeed = 0.5;
+  double INTAKE_SPEED = 0.5;
+  double SHOOTER_SPEED = 0.5;
   
   
   
@@ -118,61 +120,40 @@ public class Robot extends TimedRobot {
     boolean invert = xcontroll.getStartButton();
     boolean revinmid = xcontroll.getYButton();
     boolean revshoot = xcontroll.getXButton();
-    if (revinmid == true) {
-      if (isInRev == true) {
-        isInRev = false;
-        intakeSpeed *= -1;
-      } else if (isInRev == false) {
-        isInRev = true;
-        intakeSpeed *= -1;
-      }
+    if (revinmid == true) {//if the y button is pressed
+        isInRev = !isInRev;//sets it false if true, and true is false.
+        INTAKE_SPEED *= -1;//reverse the speed
     }
-    if (revshoot == true) {
-      if (isShootRev == true) {
-        isShootRev = false;
-        shooterSpeed *= -1;
-      } else if (isShootRev == false) {
-        isShootRev = true;
-        shooterSpeed *= -1;
-      }
+    if (revshoot == true) {//if the x button is pressed
+      isShootRev = !isShootRev;//sets it false if true, and true is false.
+      SHOOTER_SPEED *= -1;//reverse the speed
     }
-    if (Math.abs(intake) > .15) {
-      intakeMotor.set(intakeSpeed);
+    if (Math.abs(intake) > DEADZONE) {//is left trigger value greater than .15?
+      intakeMotor.set(INTAKE_SPEED);//yes: then set intake motor
     } else {
-      intakeMotor.set(0);
+      intakeMotor.set(0);//no, turn off intake motor
     }
-    if (Math.abs(shoot) > .15) {
-      uptakeShooterMotor.set(shooterSpeed);
+    if (Math.abs(shoot) > DEADZONE) {//is right trigger value greater than .15?
+      uptakeShooterMotor.set(SHOOTER_SPEED);//yes: then set shooter motor
     } else {
-      uptakeShooterMotor.set(0);
+      uptakeShooterMotor.set(0);//no: turn off shooter motor
     }
-    if (invert == true) {
-      if (isInverted == true) {
-        isInverted = false;
-      } else if (isInverted == false) {
-        isInverted = true;
-      }
+    //Depending on how often this runs the inverting code might be inconsitent at working.
+    if (invert == true) {//if the start button is pressed
+      isInverted=!isInverted;//sets it false if true, and true is false.
     }
-    if (isInverted == true) {
-      lefttrain *= -1;
-      righttrain *= -1;
-    }
-    
-    //esle condition is to make sure they dont run when controls are not being pressed
-    if (Math.abs(lefttrain) > .15) {
-      frontLeftMotor.set(lefttrain);
-      backLeftMotor.set(lefttrain);
-    } else {
-      frontLeftMotor.set(0);
-      backLeftMotor.set(0);
-    }
-    if (deadzone(righttrain) != 0) {
-      frontRightMotor.set(righttrain);
-      backRightMotor.set(righttrain);
-    } else {
-      frontRightMotor.set(0);
-      backRightMotor.set(0);
-    }
+    //the old code for inverting the drive train would invert the drive train, but couldn't revert the drive train, not what we want.
+    //inverts the drive train motors.
+    frontLeftMotor.setInverted(isInverted);
+    backLeftMotor.setInverted(isInverted);
+    frontRightMotor.setInverted(isInverted);
+    backRightMotor.setInverted(isInverted);
+    //set left motors, set to zero if joystick is inside the deadzone
+    frontLeftMotor.set(deadzone(lefttrain));
+    backLeftMotor.set(deadzone(lefttrain));
+    //set right motors, set to zero if joystick is inside the deadzone.
+    frontRightMotor.set(deadzone(righttrain));
+    backRightMotor.set(deadzone(righttrain));
   }
   
 
@@ -202,8 +183,9 @@ public class Robot extends TimedRobot {
       Motor.set(Speed);
     }
   }
+  /** This function returns 0 if the parameter's value is less than DEADZONE*/
   public double deadzone(double doubleArgument) {
-    if(Math.abs(doubleArgument) < .15) return 0;
+    if(Math.abs(doubleArgument) < DEADZONE) return 0;
     else return doubleArgument;
   }
 }
