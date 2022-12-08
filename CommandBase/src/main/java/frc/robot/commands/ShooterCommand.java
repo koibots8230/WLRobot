@@ -9,8 +9,8 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class ShooterCommand extends CommandBase {
   private final ShootUp shooter;
   /** Creates a new ShooterCommand. */
-  public ShooterCommand(ShootUp thing) {
-    shooter=thing;
+  public ShooterCommand(ShootUp subsys) {
+    shooter=subsys;
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
