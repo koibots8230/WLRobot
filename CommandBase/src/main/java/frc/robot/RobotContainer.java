@@ -23,7 +23,7 @@ public class RobotContainer {
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
-
+  private final XboxController xcontroll = new XboxController(0);//Don't know if this is correct but I think it is.
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
@@ -37,7 +37,12 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-
+    /*// the -1s for the joystickButtons are placeholders until we figure out the correct number
+    final JoystickButton XButton = new JoystickButton(xcontroll, -1);
+    final JoystickButton YButton = new JoystickButton(xcontroll, -1);
+    final JoystickButton startButton = new JoystickButton(xcontroll, -1);
+    //the values from the joysticks are triggers should be retrieved the same way they were in timebase
+    */
   }
 
   /**
