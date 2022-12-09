@@ -6,11 +6,11 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.can.*;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class ShootUp extends SubsystemBase {
+public class ShooterSubsystem extends SubsystemBase {
 
   private final WPI_TalonSRX shooterMotor;
   /** Creates a new ShootUp. */
-  public ShootUp() {
+  public ShooterSubsystem() {
     shooterMotor = new WPI_TalonSRX(15);
   }
   public void turnOnMotor(){

@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.ShootUp;
+import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.commands.ShooterCommand;
 
 /**
@@ -36,7 +36,9 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
-  private void configureButtonBindings() {}
+  private void configureButtonBindings() {
+
+  }
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
