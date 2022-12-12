@@ -1,8 +1,8 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import com.ctre.phoenix.motorcontrol.can.*;
 import frc.robot.Constants;
+import com.ctre.phoenix.motorcontrol.can.*;
 import com.ctre.phoenix.motorcontrol.Controlmode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 //This drivetrain code is built in accordance with last year's tankdrive drivetrain.

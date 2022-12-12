@@ -15,6 +15,8 @@ import edu.wpi.first.wpilibj.XboxController;
 import javax.swing.text.html.HTMLDocument.HTMLReader.IsindexAction;
 
 import com.ctre.phoenix.motorcontrol.can.*;
+import com.ctre.phoenix.motorcontrol.Controlmode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -33,12 +35,12 @@ public class Robot extends TimedRobot {
   int intakenumber = 4;
   int shooternumber = 15;
   //defining motors
-  WPI_TalonSRX frontLeftMotor = new WPI_TalonSRX(2);
-  WPI_TalonSRX backLeftMotor = new WPI_TalonSRX(0);
-  WPI_TalonSRX frontRightMotor = new WPI_TalonSRX(3);
-  WPI_TalonSRX backRightMotor = new WPI_TalonSRX(1);
-  WPI_TalonSRX intakeMotor = new WPI_TalonSRX(intakenumber);
-  WPI_TalonSRX uptakeShooterMotor = new WPI_TalonSRX(shooternumber);
+  TalonSRX frontLeftMotor = new TalonSRX(2);
+  TalonSRX backLeftMotor = new TalonSRX(0);
+  TalonSRX frontRightMotor = new TalonSRX(3);
+  TalonSRX backRightMotor = new TalonSRX(1);
+  TalonSRX intakeMotor = new TalonSRX(intakenumber);
+  TalonSRX uptakeShooterMotor = new TalonSRX(shooternumber);
   
   XboxController xcontroll;
 
