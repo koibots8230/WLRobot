@@ -6,7 +6,7 @@ import com.ctre.phoenix.motorcontrol.can.*;
 import com.ctre.phoenix.motorcontrol.Controlmode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 //This drivetrain code is built in accordance with last year's tankdrive drivetrain.
-public class Drivetrain extends SubsystemBase {
+public class driveTrainSubsystem extends SubsystemBase {
     private final TalonSRX leftMotor;
     private final TalonSRX rightMotor;
     public float speed = 50; //Assuming speed is in percentage.
