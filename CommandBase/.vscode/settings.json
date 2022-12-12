@@ -25,5 +25,9 @@
       }
     },
   ],
-  "java.test.defaultConfig": "WPIlibUnitTests"
+  "java.test.defaultConfig": "WPIlibUnitTests",
+  "java.project.referencedLibraries": [
+    "lib/**/*.jar",
+    "c:\\Users\\Public\\wpilib\\2022\\maven\\com\\ctre\\phoenix\\wpiapi-java\\5.21.3\\wpiapi-java-5.21.3.jar"
+  ]
 }
