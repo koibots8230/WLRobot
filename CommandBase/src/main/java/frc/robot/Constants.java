@@ -19,5 +19,7 @@ public final class Constants {
     public static final int BACK_LEFT_MOTOR_PORT = 0;
     public static final int BACK_RIGHT_MOTOR_PORT = 1;
     public static final int SHOOTER_MOTOR_PORT = 15;
+    public static final double INTAKE_SPEED = 0.5;
+    public static final double DEADZONE = .15;
 
 }
