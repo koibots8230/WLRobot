@@ -1,0 +1,4 @@
+{
+    "wpilib.selectDefaultSimulateExtension": true,
+    "java.configuration.updateBuildConfiguration": "interactive"
+}
