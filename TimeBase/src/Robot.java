@@ -35,9 +35,9 @@ public class Robot extends TimedRobot {
   int intakenumber = 4;
   int shooternumber = 15;
   //defining motors
-  TalonSRX frontLeftMotor = new TalonSRX(2);
+  TalonSRX frontLeftMotor = new TalonSRX(15);
   TalonSRX backLeftMotor = new TalonSRX(0);
-  TalonSRX frontRightMotor = new TalonSRX(3);
+  TalonSRX frontRightMotor = new TalonSRX(2);
   TalonSRX backRightMotor = new TalonSRX(1);
   TalonSRX intakeMotor = new TalonSRX(intakenumber);
   TalonSRX uptakeShooterMotor = new TalonSRX(shooternumber);
