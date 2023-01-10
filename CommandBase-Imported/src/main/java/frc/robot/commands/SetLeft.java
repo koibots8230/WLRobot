@@ -3,27 +3,34 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.commands;
-import frc.robot.subsystems.IntakeSubsystem;
-import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class IntakeDefaultCommand extends CommandBase {
-  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final IntakeSubsystem m_intakesubsystem;
-  /** Creates a new IntakeCommand. */
-  public IntakeDefaultCommand(IntakeSubsystem subsystem, double _percentSpeed) {
-    m_intakesubsystem = subsystem;
-    addRequirements(m_intakesubsystem);
-    m_intakesubsystem.updateMotor(_percentSpeed);
+import java.util.function.DoubleSupplier;
+
+import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Subsystem;
+import frc.robot.subsystems.driveTrainSubsystem;
+
+public class SetLeft extends CommandBase {
+  private final driveTrainSubsystem drive;
+
+  /** Creates a new SetLeft. */
+  public SetLeft(driveTrainSubsystem subsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
+    drive = subsystem;
+    addRequirements(drive);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    drive.activateLeft(0.8);
+  }
 
   // Called once the command ends or is interrupted.
   @Override

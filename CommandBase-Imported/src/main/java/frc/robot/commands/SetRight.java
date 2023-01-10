@@ -3,25 +3,28 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.commands;
-import frc.robot.subsystems.ShooterSubsystem;
-import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class ShooterCommand extends CommandBase {
-  private final ShooterSubsystem shooter;
-  /** Creates a new ShooterCommand. */
-  public ShooterCommand(ShooterSubsystem subsys) {
-    shooter=subsys;
+import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.*;;
+
+public class SetRight extends CommandBase {
+  private final driveTrainSubsystem drive;
+  /** Creates a new SetRight. */
+  public SetRight(driveTrainSubsystem subsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
+    drive = subsystem;
+    addRequirements(drive);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    drive.activateRight(0.8);
+  }
 
   // Called once the command ends or is interrupted.
   @Override
