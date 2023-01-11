@@ -8,17 +8,10 @@ import java.util.function.BooleanSupplier;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.event.BooleanEvent;
-import edu.wpi.first.wpilibj.event.EventLoop;
-//import frc.robot.commands.ExampleCommand;
-//import frc.robot.subsystems.ExampleSubsystem;
-import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.commands.AutonomousCommand;
-import frc.robot.commands.SetLeft;
-import frc.robot.commands.SetRight;
+
+import frc.robot.commands.*;
+
 import frc.robot.subsystems.driveTrainSubsystem;
-import frc.robot.Constants;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -31,17 +24,14 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-
-  private final driveTrainSubsystem m_dDriveTrainSubsystem = new driveTrainSubsystem();
+  private final CommandXboxController driverController = new CommandXboxController(Constants.CONTROLLER_PORT);
+  private final driveTrainSubsystem m_dDriveTrainSubsystem = new driveTrainSubsystem(driverController);
   private final AutonomousCommand m_AutonomousCommand = new AutonomousCommand(m_dDriveTrainSubsystem);
-  private final CommandXboxController driverController = new CommandXboxController(0);
-  private final SetLeft moveLeftCommand = new SetLeft(m_dDriveTrainSubsystem);
-  private final SetRight moveRightCommand = new SetRight(m_dDriveTrainSubsystem);
+  private final pidSetLeftCommand moveLeftCommand = new pidSetLeftCommand(m_dDriveTrainSubsystem);
+  private final pidSetRightCommand moveRightCommand = new pidSetRightCommand(m_dDriveTrainSubsystem);
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   RobotContainer() {
-  
-
     // Configure the button bindings
     configureButtonBindings();
   }
@@ -53,14 +43,14 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+    BooleanSupplier rightDeadzoneSupplier = () ->  driverController.getRightY() > Constants.DEADZONE;
+    BooleanSupplier leftDeadzoneSupplier = () -> driverController.getLeftX() > Constants.DEADZONE;
     Trigger rightTrigger = driverController.rightStick()
-      .whileTrue(m_AutonomousCommand);
-    Trigger lefTrigger = driverController.leftStick()
+      .and(rightDeadzoneSupplier)
+      .whileTrue(moveRightCommand);
+    Trigger leftTrigger = driverController.leftStick()
+      .and(leftDeadzoneSupplier)
       .whileTrue(moveLeftCommand);
-  
-    
-    
-    
   }
 
   /**
