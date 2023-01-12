@@ -6,6 +6,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
+import frc.robot.Constants;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.SensorSubsystem;
 
@@ -13,26 +14,35 @@ import frc.robot.subsystems.SensorSubsystem;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class AutonomousCommand extends PIDCommand {
+  private SensorSubsystem sensors;
+  private DriveTrainSubsystem drive;
   /** Creates a new AutonomousCommand. */
   public AutonomousCommand(DriveTrainSubsystem _drive, SensorSubsystem _sensors) {
     super(
         // The controller that the command will use
-        new PIDController(0, 0, 0),
+        new PIDController(Constants.kpAuto, Constants.kiAuto, Constants.kdAuto),
         // This should return the measurement
-        () -> 0,
+        () -> _sensors.getAngle(),
         // This should return the setpoint (can also be a constant)
         () -> 0,
         // This uses the output
         output -> {
           // Use the output here
+
         });
     // Use addRequirements() here to declare subsystem dependencies.
+    sensors = _sensors;
+    drive = _drive;
+    addRequirements(_drive, _sensors);
     // Configure additional PID options by calling `getController` here.
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    if (sensors.getAngle() < 2.5) {
+      return true;
+    }
     return false;
   }
 }

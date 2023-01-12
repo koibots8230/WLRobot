@@ -5,9 +5,6 @@
 package frc.robot;
 
 import java.util.function.BooleanSupplier;
-
-import edu.wpi.first.networktables.DoubleTopic;
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 
@@ -26,10 +23,8 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  NetworkTableInstance inst = NetworkTableInstance.getDefault();
-  DoubleTopic motors = inst.getDoubleTopic("/motors/X");
   private final CommandXboxController driverController = new CommandXboxController(Constants.CONTROLLER_PORT);
-  private final DriveTrainSubsystem m_DriveTrainSubsystem = new DriveTrainSubsystem(driverController, motors);
+  private final DriveTrainSubsystem m_DriveTrainSubsystem = new DriveTrainSubsystem(driverController);
   private final SensorSubsystem m_SensorSubsystem = new SensorSubsystem();
   private final AutonomousCommand m_AutonomousCommand = new AutonomousCommand(m_DriveTrainSubsystem, m_SensorSubsystem);
   private final pidSetLeftCommand moveLeftCommand = new pidSetLeftCommand(m_DriveTrainSubsystem);
