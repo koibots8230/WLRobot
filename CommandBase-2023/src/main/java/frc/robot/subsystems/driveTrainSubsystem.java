@@ -1,44 +1,55 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.networktables.DoubleEntry;
+import edu.wpi.first.networktables.DoubleTopic;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants;
-
+import edu.wpi.first.networktables.PubSubOption;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
 //This drivetrain code is built in accordance with last year's tankdrive drivetrain.
-public class driveTrainSubsystem extends SubsystemBase {
+public class DriveTrainSubsystem extends SubsystemBase {
     private final TalonSRX frontleftMotor;
     private final TalonSRX backleftMotor;
     private final TalonSRX frontrightMotor;
     private final TalonSRX backrightMotor;//right and left motors should move together.
-    public final CommandXboxController m_controller;
+    public final CommandXboxController controller;
+    private DoubleEntry driveLeftEntry;
+    private DoubleEntry driveRightEntry;
     
     //Assuming speed is in percentage.
     //FYI: 1: double is just a better float. 2: speed is a percentage but as a decimal.
-    public driveTrainSubsystem(CommandXboxController controller) {
-        m_controller = controller;
+    public DriveTrainSubsystem(CommandXboxController _controller, DoubleTopic _driveTopic) {
+        controller = _controller;
         frontleftMotor = new TalonSRX(Constants.FRONT_LEFT_MOTOR_PORT);
         backleftMotor = new TalonSRX(Constants.BACK_LEFT_MOTOR_PORT);
         frontrightMotor = new TalonSRX(Constants.FRONT_RIGHT_MOTOR_PORT);
         backrightMotor = new TalonSRX(Constants.BACK_RIGHT_MOTOR_PORT);
+        driveLeftEntry = _driveTopic.getEntry(0, PubSubOption.keepDuplicates(true));
     }
 
     public void activateLeft() {
-        double activateSpeed = m_controller.getLeftY();
+        double activateSpeed = controller.getLeftY();
         frontleftMotor.set(ControlMode.PercentOutput, activateSpeed);
         backleftMotor.set(ControlMode.PercentOutput, activateSpeed);
     }
 
     public void activateRight() {
-        double activateSpeed = m_controller.getRightY();
+        double activateSpeed = controller.getRightY();
         frontrightMotor.set(ControlMode.PercentOutput, activateSpeed);
         backrightMotor.set(ControlMode.PercentOutput, activateSpeed);
     }
 
-    public void pidActivateRight(double activateSpeed) {
-        frontrightMotor.set(ControlMode.PercentOutput, activateSpeed);
-        backrightMotor.set(ControlMode.PercentOutput, activateSpeed);
+    public void pidActivateRight(double _activateSpeed) {
+        frontrightMotor.set(ControlMode.PercentOutput, _activateSpeed);
+        backrightMotor.set(ControlMode.PercentOutput, _activateSpeed);
+    }
+
+    public void pidActivateLeft(double _activateSpeed) {
+        frontrightMotor.set(ControlMode.PercentOutput, _activateSpeed);
+        backrightMotor.set(ControlMode.PercentOutput, _activateSpeed);
     }
     
     public void stopDriving() { // Brings the robot to a standstill.
@@ -59,6 +70,7 @@ public class driveTrainSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
       // This method will be called once per scheduler run
-      
+        driveLeftEntry.set(this.leftMeasurement());
+        driveRightEntry.set(this.rightMeasurment());
     }
 }

@@ -6,12 +6,14 @@ package frc.robot;
 
 import java.util.function.BooleanSupplier;
 
+import edu.wpi.first.networktables.DoubleTopic;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 
 import frc.robot.commands.*;
 
-import frc.robot.subsystems.driveTrainSubsystem;
+import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -24,11 +26,14 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
+  NetworkTableInstance inst = NetworkTableInstance.getDefault();
+  DoubleTopic motors = inst.getDoubleTopic("/motors/X");
   private final CommandXboxController driverController = new CommandXboxController(Constants.CONTROLLER_PORT);
-  private final driveTrainSubsystem m_dDriveTrainSubsystem = new driveTrainSubsystem(driverController);
-  private final AutonomousCommand m_AutonomousCommand = new AutonomousCommand(m_dDriveTrainSubsystem);
-  private final pidSetLeftCommand moveLeftCommand = new pidSetLeftCommand(m_dDriveTrainSubsystem);
-  private final pidSetRightCommand moveRightCommand = new pidSetRightCommand(m_dDriveTrainSubsystem);
+  private final DriveTrainSubsystem m_DriveTrainSubsystem = new DriveTrainSubsystem(driverController, motors);
+  private final SensorSubsystem m_SensorSubsystem = new SensorSubsystem();
+  private final AutonomousCommand m_AutonomousCommand = new AutonomousCommand(m_DriveTrainSubsystem, m_SensorSubsystem);
+  private final pidSetLeftCommand moveLeftCommand = new pidSetLeftCommand(m_DriveTrainSubsystem);
+  private final pidSetRightCommand moveRightCommand = new pidSetRightCommand(m_DriveTrainSubsystem);
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   RobotContainer() {

@@ -7,28 +7,28 @@ package frc.robot.commands;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.Constants;
-import frc.robot.subsystems.driveTrainSubsystem;
+import frc.robot.subsystems.DriveTrainSubsystem;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class pidSetRightCommand extends PIDCommand {
   /*  Creates a new pidSetRightCommand. */
-  public pidSetRightCommand(driveTrainSubsystem m_Subsystem) {
+  public pidSetRightCommand(DriveTrainSubsystem _Subsystem) {
     super(
         // The controller that the command will use
         new PIDController(Constants.kpDrive, Constants.kiDrive, Constants.kdDrive),
         // This should return the measurement
-        () -> m_Subsystem.leftMeasurement(),
+        () -> _Subsystem.rightMeasurment(),
         // This should return the setpoint (can also be a constant)
-        () -> m_Subsystem.m_controller.getRightY(),
+        () -> _Subsystem.controller.getRightY(),
         // This uses the output
         output -> {
           // Use the output here
-          m_Subsystem.pidActivateRight(output);
+          _Subsystem.pidActivateRight(output);
         });
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(m_Subsystem);
+    addRequirements(_Subsystem);
     // Configure additional PID options by calling `getController` here.
   }
 
