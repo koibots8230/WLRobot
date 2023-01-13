@@ -25,15 +25,13 @@ public class DriveTrainSubsystem extends SubsystemBase {
     }
 
     public void activateLeft() {
-        double activateSpeed = controller.getLeftY();
-        frontleftMotor.set(ControlMode.PercentOutput, activateSpeed);
-        backleftMotor.set(ControlMode.PercentOutput, activateSpeed);
+        frontleftMotor.set(ControlMode.PercentOutput, Constants.AutoSpeed);
+        backleftMotor.set(ControlMode.PercentOutput, Constants.AutoSpeed);
     }
 
     public void activateRight() {
-        double activateSpeed = controller.getRightY();
-        frontrightMotor.set(ControlMode.PercentOutput, activateSpeed);
-        backrightMotor.set(ControlMode.PercentOutput, activateSpeed);
+        frontrightMotor.set(ControlMode.PercentOutput, Constants.AutoSpeed);
+        backrightMotor.set(ControlMode.PercentOutput, Constants.AutoSpeed);
     }
 
     public void pidActivateRight(double _activateSpeed) {

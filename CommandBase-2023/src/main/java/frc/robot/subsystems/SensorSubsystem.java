@@ -5,16 +5,18 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 
 public class SensorSubsystem extends SubsystemBase {
   /** Creates a new SensorSubsystem. */
+  private final ADXRS450_Gyro gyro;
   public SensorSubsystem() {
-
+    gyro = new ADXRS450_Gyro();
     
   }
 
   public double getAngle() {
-    return 0;
+    return gyro.getAngle();
   }
 
   @Override
