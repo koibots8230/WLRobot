@@ -4,24 +4,24 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants;
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 //This drivetrain code is built in accordance with last year's tankdrive drivetrain.
 public class DriveTrainSubsystem extends SubsystemBase {
-    private final TalonSRX frontleftMotor;
-    private final TalonSRX backleftMotor;
-    private final TalonSRX frontrightMotor;
-    private final TalonSRX backrightMotor;//right and left motors should move together.
+    private final WPI_TalonSRX frontleftMotor;
+    private final WPI_TalonSRX backleftMotor;
+    private final WPI_TalonSRX frontrightMotor;
+    private final WPI_TalonSRX backrightMotor;//right and left motors should move together.
     public final CommandXboxController controller;
     
     //Assuming speed is in percentage.
     //FYI: 1: double is just a better float. 2: speed is a percentage but as a decimal.
     public DriveTrainSubsystem(CommandXboxController _controller) {
         controller = _controller;
-        frontleftMotor = new TalonSRX(Constants.FRONT_LEFT_MOTOR_PORT);
-        backleftMotor = new TalonSRX(Constants.BACK_LEFT_MOTOR_PORT);
-        frontrightMotor = new TalonSRX(Constants.FRONT_RIGHT_MOTOR_PORT);
-        backrightMotor = new TalonSRX(Constants.BACK_RIGHT_MOTOR_PORT);
+        frontleftMotor = new WPI_TalonSRX(Constants.FRONT_LEFT_MOTOR_PORT);
+        backleftMotor = new WPI_TalonSRX(Constants.BACK_LEFT_MOTOR_PORT);
+        frontrightMotor = new WPI_TalonSRX(Constants.FRONT_RIGHT_MOTOR_PORT);
+        backrightMotor = new WPI_TalonSRX(Constants.BACK_RIGHT_MOTOR_PORT);
     }
 
     public void activateLeft() {

@@ -45,12 +45,11 @@ public class RobotContainer {
   private void configureButtonBindings() {
     BooleanSupplier rightDeadzoneSupplier = () ->  driverController.getRightY() > Constants.DEADZONE;
     BooleanSupplier leftDeadzoneSupplier = () -> driverController.getLeftX() > Constants.DEADZONE;
-    Trigger rightTrigger = driverController.rightStick()
-      .and(rightDeadzoneSupplier)
-      .whileTrue(moveRightCommand);
-    Trigger leftTrigger = driverController.leftStick()
-      .and(leftDeadzoneSupplier)
-      .whileTrue(moveLeftCommand);
+    Trigger rightTrigger = driverController.rightStick();
+      rightTrigger.and(rightDeadzoneSupplier);
+      rightTrigger.whileTrue(moveRightCommand);
+    Trigger leftTrigger = driverController.leftStick().and(leftDeadzoneSupplier);
+    leftTrigger.whileTrue(moveLeftCommand);
   }
 
   /**

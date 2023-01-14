@@ -5,7 +5,6 @@
 package frc.robot.commands;
 
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.Constants;
 import frc.robot.subsystems.DriveTrainSubsystem;
@@ -16,7 +15,6 @@ import frc.robot.subsystems.SensorSubsystem;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class AutonomousCommand extends PIDCommand {
   private SensorSubsystem sensors;
-  private DriveTrainSubsystem drive;
 
   /** Creates a new AutonomousCommand. */
   public AutonomousCommand(DriveTrainSubsystem _drive, SensorSubsystem _sensors) {
@@ -35,6 +33,7 @@ public class AutonomousCommand extends PIDCommand {
         });
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(_drive, _sensors);
+    sensors = _sensors;
     // Configure additional PID options by calling `getController` here.
   }
 
