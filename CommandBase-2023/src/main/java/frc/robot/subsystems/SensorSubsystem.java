@@ -12,11 +12,15 @@ public class SensorSubsystem extends SubsystemBase {
   private final ADXRS450_Gyro gyro;
   public SensorSubsystem() {
     gyro = new ADXRS450_Gyro();
-    
+    gyro.calibrate();
   }
 
   public double getAngle() {
     return gyro.getAngle();
+  }
+
+  public void calibrateGyro() {
+    gyro.calibrate();
   }
 
   @Override

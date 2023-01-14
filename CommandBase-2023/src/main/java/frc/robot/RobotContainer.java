@@ -5,6 +5,8 @@
 package frc.robot;
 
 import java.util.function.BooleanSupplier;
+
+
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 
@@ -29,6 +31,7 @@ public class RobotContainer {
   private final AutonomousCommand m_AutonomousCommand = new AutonomousCommand(m_DriveTrainSubsystem, m_SensorSubsystem);
   private final pidSetLeftCommand moveLeftCommand = new pidSetLeftCommand(m_DriveTrainSubsystem);
   private final pidSetRightCommand moveRightCommand = new pidSetRightCommand(m_DriveTrainSubsystem);
+  private final CalibrateGyro gyroCalibrate = new CalibrateGyro(m_SensorSubsystem);
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   RobotContainer() {
@@ -45,11 +48,17 @@ public class RobotContainer {
   private void configureButtonBindings() {
     BooleanSupplier rightDeadzoneSupplier = () ->  driverController.getRightY() > Constants.DEADZONE;
     BooleanSupplier leftDeadzoneSupplier = () -> driverController.getLeftX() > Constants.DEADZONE;
+    
     Trigger rightTrigger = driverController.rightStick();
-      rightTrigger.and(rightDeadzoneSupplier);
-      rightTrigger.whileTrue(moveRightCommand);
-    Trigger leftTrigger = driverController.leftStick().and(leftDeadzoneSupplier);
+    rightTrigger.and(rightDeadzoneSupplier);
+    rightTrigger.whileTrue(moveRightCommand);
+
+    Trigger leftTrigger = driverController.leftStick();
+    leftTrigger.and(leftDeadzoneSupplier);
     leftTrigger.whileTrue(moveLeftCommand);
+
+    Trigger calibrateTrigger = driverController.b();
+    calibrateTrigger.onTrue(gyroCalibrate);
   }
 
   /**
