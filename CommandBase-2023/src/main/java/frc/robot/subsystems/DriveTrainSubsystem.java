@@ -40,8 +40,8 @@ public class DriveTrainSubsystem extends SubsystemBase {
     }
 
     public void pidActivateLeft(double _activateSpeed) {
-        frontrightMotor.set(ControlMode.PercentOutput, _activateSpeed);
-        backrightMotor.set(ControlMode.PercentOutput, _activateSpeed);
+        frontleftMotor.set(ControlMode.PercentOutput, _activateSpeed);
+        backleftMotor.set(ControlMode.PercentOutput, _activateSpeed);
     }
     
     public void stopDriving() { // Brings the robot to a standstill.

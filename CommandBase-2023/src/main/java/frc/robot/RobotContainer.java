@@ -6,7 +6,7 @@ package frc.robot;
 
 import java.util.function.BooleanSupplier;
 
-
+import java.lang.Math;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 
@@ -46,15 +46,13 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    BooleanSupplier rightDeadzoneSupplier = () ->  driverController.getRightY() > Constants.DEADZONE;
-    BooleanSupplier leftDeadzoneSupplier = () -> driverController.getLeftX() > Constants.DEADZONE;
+    BooleanSupplier rightDeadzoneSupplier = () ->  Math.abs(driverController.getRawAxis(5)) > Constants.DEADZONE;
+    BooleanSupplier leftDeadzoneSupplier = () -> Math.abs(driverController.getRawAxis(1)) > Constants.DEADZONE;
     
-    Trigger rightTrigger = driverController.rightStick();
-    rightTrigger.and(rightDeadzoneSupplier);
+    Trigger rightTrigger = new Trigger(rightDeadzoneSupplier);
     rightTrigger.whileTrue(moveRightCommand);
 
-    Trigger leftTrigger = driverController.leftStick();
-    leftTrigger.and(leftDeadzoneSupplier);
+    Trigger leftTrigger = new Trigger(leftDeadzoneSupplier);
     leftTrigger.whileTrue(moveLeftCommand);
 
     Trigger calibrateTrigger = driverController.b();

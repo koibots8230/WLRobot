@@ -21,7 +21,7 @@ public class pidSetRightCommand extends PIDCommand {
         // This should return the measurement
         () -> _Subsystem.rightMeasurment(),
         // This should return the setpoint (can also be a constant)
-        () -> _Subsystem.controller.getRightY(),
+        () -> _Subsystem.controller.getRawAxis(5),
         // This uses the output
         output -> {
           // Use the output here
