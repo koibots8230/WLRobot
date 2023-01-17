@@ -26,8 +26,14 @@ public class pidDrive extends PIDCommand {
         // This uses the output
         output -> {
           // Use the output here
-          _driveSubsystem.pidActivateLeft(output - _driveSubsystem.controller.getRawAxis(1));
-          _driveSubsystem.pidActivateRight(output - _driveSubsystem.controller.getRawAxis(5));
+          if (_driveSubsystem.controller.getRawAxis(1) < _driveSubsystem.controller.getRawAxis(5)) {
+            _driveSubsystem.pidActivateLeft(output - _driveSubsystem.controller.getRawAxis(1));
+            _driveSubsystem.pidActivateRight(output - (output - _driveSubsystem.controller.getRawAxis(1)));
+          } else {
+            _driveSubsystem.pidActivateRight(output - _driveSubsystem.controller.getRawAxis(5));
+            _driveSubsystem.pidActivateLeft(output - (output - _driveSubsystem.controller.getRawAxis(5)));
+          }
+
         });
     // Use addRequirements() here to declare subsystem dependencies.
     // Configure additional PID options by calling `getController` here.
