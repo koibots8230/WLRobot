@@ -37,9 +37,6 @@ public class pidDrive extends PIDCommand {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (driveTrainSubsystem.controller.getRawAxis(1) + driveTrainSubsystem.controller.getRawAxis(5) < 0.3) {
-      return true;
-    }
     return false;
   }
 }
