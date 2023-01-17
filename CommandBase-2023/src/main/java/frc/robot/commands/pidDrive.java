@@ -29,6 +29,9 @@ public class pidDrive extends PIDCommand {
           if (_driveSubsystem.controller.getRawAxis(1) < _driveSubsystem.controller.getRawAxis(5)) {
             _driveSubsystem.pidActivateLeft(output - _driveSubsystem.controller.getRawAxis(1));
             _driveSubsystem.pidActivateRight(output - (output - _driveSubsystem.controller.getRawAxis(1)));
+          } else if (_driveSubsystem.controller.getRawAxis(1) == _driveSubsystem.controller.getRawAxis(5)) {
+            _driveSubsystem.pidActivateLeft(output/2);
+            _driveSubsystem.pidActivateRight(output/2);
           } else {
             _driveSubsystem.pidActivateRight(output - _driveSubsystem.controller.getRawAxis(5));
             _driveSubsystem.pidActivateLeft(output - (output - _driveSubsystem.controller.getRawAxis(5)));
