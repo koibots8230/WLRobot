@@ -32,7 +32,8 @@ public class RobotContainer {
   private final pidSetLeftCommand moveLeftCommand = new pidSetLeftCommand(m_DriveTrainSubsystem);
   private final pidSetRightCommand moveRightCommand = new pidSetRightCommand(m_DriveTrainSubsystem);
   private final CalibrateGyro gyroCalibrate = new CalibrateGyro(m_SensorSubsystem);
-  
+  private final pidDrive driveCommand = new pidDrive(m_DriveTrainSubsystem);
+
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   RobotContainer() {
     // Configure the button bindings
@@ -50,10 +51,10 @@ public class RobotContainer {
     BooleanSupplier leftDeadzoneSupplier = () -> Math.abs(driverController.getRawAxis(1)) > Constants.DEADZONE;
     
     Trigger rightTrigger = new Trigger(rightDeadzoneSupplier);
-    rightTrigger.whileTrue(moveRightCommand);
+    rightTrigger.whileTrue(driveCommand);
 
     Trigger leftTrigger = new Trigger(leftDeadzoneSupplier);
-    leftTrigger.whileTrue(moveLeftCommand);
+    leftTrigger.whileTrue(driveCommand);
 
     Trigger calibrateTrigger = driverController.b();
     calibrateTrigger.onTrue(gyroCalibrate);
