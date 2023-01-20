@@ -13,7 +13,6 @@ import frc.robot.subsystems.DriveTrainSubsystem;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class pidDrive extends PIDCommand {
-  private DriveTrainSubsystem driveTrainSubsystem;
   /** Creates a new pidDrive. */
   public pidDrive(DriveTrainSubsystem _driveSubsystem) {
     super(
@@ -26,21 +25,12 @@ public class pidDrive extends PIDCommand {
         // This uses the output
         output -> {
           // Use the output here
-          if (_driveSubsystem.controller.getRawAxis(1) < _driveSubsystem.controller.getRawAxis(5)) {
-            _driveSubsystem.pidActivateLeft(output - _driveSubsystem.controller.getRawAxis(1));
-            _driveSubsystem.pidActivateRight(output - (output - _driveSubsystem.controller.getRawAxis(1)));
-          } else if (_driveSubsystem.controller.getRawAxis(1) == _driveSubsystem.controller.getRawAxis(5)) {
-            _driveSubsystem.pidActivateLeft(output/2);
-            _driveSubsystem.pidActivateRight(output/2);
-          } else {
-            _driveSubsystem.pidActivateRight(output - _driveSubsystem.controller.getRawAxis(5));
-            _driveSubsystem.pidActivateLeft(output - (output - _driveSubsystem.controller.getRawAxis(5)));
-          }
+          _driveSubsystem.pidActivateLeft(output * (Constants.maxNormalSpeed * _driveSubsystem.controller.getRawAxis(1)/ Constants.maxNormalSpeed));
+          _driveSubsystem.pidActivateRight(output * (Constants.maxNormalSpeed * _driveSubsystem.controller.getRawAxis(1)/ Constants.maxNormalSpeed));
 
         });
     // Use addRequirements() here to declare subsystem dependencies.
     // Configure additional PID options by calling `getController` here.
-    driveTrainSubsystem = _driveSubsystem;
   }
 
   // Returns true when the command should end.

@@ -22,7 +22,7 @@ public final class Constants {
 //PID Constants
     //PID Constants for pidSetLeftCommand and pidSetRightCommand
     public static final double kpDrive = 0.6;
-    public static final double kiDrive = 0.4;
+    public static final double kiDrive = 0.2;
     public static final double kdDrive = 0.7;
     //PID Constants for Autonomous Command
     public static final double kpAuto = 0.5;
@@ -31,4 +31,5 @@ public final class Constants {
 //Miscellaneous Constants
     public static final double DEADZONE = 0.15;
     public static final double AutoSpeed = 0.2;
+    public static final double maxNormalSpeed = 0.5;
 }
