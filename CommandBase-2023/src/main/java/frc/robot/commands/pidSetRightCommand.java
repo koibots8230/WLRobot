@@ -28,7 +28,6 @@ public class pidSetRightCommand extends PIDCommand {
           _Subsystem.pidActivateRight(output);
         });
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(_Subsystem);
     // Configure additional PID options by calling `getController` here.
   }
 
