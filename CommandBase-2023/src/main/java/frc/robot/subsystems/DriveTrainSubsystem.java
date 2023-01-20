@@ -22,16 +22,16 @@ public class DriveTrainSubsystem extends SubsystemBase {
         backleftMotor = new VictorSPX(Constants.BACK_LEFT_MOTOR_PORT);
         frontrightMotor = new VictorSPX(Constants.FRONT_RIGHT_MOTOR_PORT);
         backrightMotor = new VictorSPX(Constants.BACK_RIGHT_MOTOR_PORT);
+        backrightMotor.follow(frontrightMotor);
+        backleftMotor.follow(frontleftMotor);
     }
 
     public void activateLeft() {
         frontleftMotor.set(ControlMode.PercentOutput, Constants.AutoSpeed);
-        backleftMotor.set(ControlMode.PercentOutput, Constants.AutoSpeed);
     }
 
     public void activateRight() {
         frontrightMotor.set(ControlMode.PercentOutput, Constants.AutoSpeed);
-        backrightMotor.set(ControlMode.PercentOutput, Constants.AutoSpeed);
     }
 
     public void pidActivateRight(double _activateSpeed) {
@@ -44,9 +44,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
     
     public void stopDriving() { // Brings the robot to a standstill.
         backrightMotor.set(ControlMode.PercentOutput, 0);
-        frontrightMotor.set(ControlMode.PercentOutput, 0);
         frontleftMotor.set(ControlMode.PercentOutput, 0);
-        backleftMotor.set(ControlMode.PercentOutput, 0);
     }
 
     public double leftMeasurement() {
