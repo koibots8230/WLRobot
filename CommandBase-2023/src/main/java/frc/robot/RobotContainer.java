@@ -6,26 +6,24 @@ package frc.robot;
 
 import java.util.function.BooleanSupplier;
 
-import javax.security.auth.login.FailedLoginException;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import java.lang.Math;
-import java.lang.ModuleLayer.Controller;
 
 import edu.wpi.first.math.filter.Debouncer.DebounceType;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
-
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import frc.robot.commands.*;
 
 import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -37,17 +35,16 @@ public class RobotContainer {
   private final CommandXboxController driverController = new CommandXboxController(Constants.CONTROLLER_PORT);
   private final SensorSubsystem sensorSubsystem = new SensorSubsystem();
   private final TankDriveSubsystemBase leftDriveSubsystem = new TankDriveSubsystemBase(Constants.PRIMARY_LEFT_MOTOR_PORT, Constants.SECONDARY_LEFT_MOTOR_PORT, ControlMode.PercentOutput);
-  private final TankDriveSubsystemBase rightDriveSubsystem = new TankDriveSubsystemBase(Constants.PRIMARY_RIGHT_MOTOR_PORT, Constants.SECONDARY_RIGHT_MOTOR_PORT, ControlMode.PercentOutput);
+  private final TankDriveSubsystemBase rightDriveSubsystem = new TankDriveSubsystemBase(Constants.PRIMARY_RIGHT_MOTOR_PORT, Constants.SECONDARY_RIGHT_MOTOR_PORT, true, true, ControlMode.PercentOutput);
   private final pidSetMotor leftDriveCommand = new pidSetMotor(leftDriveSubsystem, driverController, Constants.CONTROLLER_LEFT_AXIS);
-  private final pidSetMotor rightDriveCommand = new pidSetMotor(rightDriveSubsystem, driverController, Constants.CONTRROLLER_RIGHT_AXIS);
+  private final pidSetMotor rightDriveCommand = new pidSetMotor(rightDriveSubsystem, driverController, Constants.CONTROLLER_RIGHT_AXIS);
   private final AutonomousCommand m_AutonomousCommand = null;
   private final CalibrateGyroCommand calibrateGyroCommand = new CalibrateGyroCommand(sensorSubsystem);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   RobotContainer() {
-    //BUILD THE SHUFFLEBOARD
-    buildShuffleBoard();
     // Configure the button bindings
+    buildShuffleboard();
     configureButtonBindings();
   }
 
@@ -58,7 +55,7 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    BooleanSupplier rightThumbstickSupplier = () ->  deadzone(driverController.getRawAxis(Constants.CONTROLLER_LEFT_AXIS));
+    BooleanSupplier rightThumbstickSupplier = () ->  deadzone(driverController.getRawAxis(Constants.CONTROLLER_RIGHT_AXIS));
     BooleanSupplier leftThumbstickSupplier = () ->  deadzone(driverController.getRawAxis(Constants.CONTROLLER_LEFT_AXIS));
 
     BooleanSupplier rightMotorSupplier = () -> rightDriveSubsystem.getEncoder() == 0;
@@ -88,13 +85,14 @@ public class RobotContainer {
     else return true;
   }
 
-  //Shuffleboard functions
   private void buildDriverTab() {
-    ShuffleboardTab motors = Shuffleboard.getTab("SmartDashboard");
-    motors.add("Motor Voltage", true).withPosition(4, 0).withWidget(BuiltInWidgets.kNumberBar);
+    //ShuffleboardTab motors = Shuffleboard.getTab("SmartDashboard");
+    //motors.add("Motor Voltage", true).withPosition(4, 0).withWidget(BuiltInWidgets.kTextView);
+    ShuffleboardTab pidOutput = Shuffleboard.getTab("SmartDashboard");
+    pidOutput.add("PID Raw Output", true).withPosition(4, 0).withWidget(BuiltInWidgets.kGraph);
   }
 
-  private void buildShuffleBoard() {
+  private void buildShuffleboard() {
     buildDriverTab();
   }
 }

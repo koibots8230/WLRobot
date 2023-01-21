@@ -33,5 +33,5 @@ public final class Constants {
     public static final double AutoSpeed = 0.2;
     public static final double MAX_NORMAL_SPEED = 0.5;
     public static final int CONTROLLER_LEFT_AXIS = 1;
-    public static final int CONTRROLLER_RIGHT_AXIS = 5;
+    public static final int CONTROLLER_RIGHT_AXIS = 5;
 }
