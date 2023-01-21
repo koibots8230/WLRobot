@@ -23,7 +23,9 @@ import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
-
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -43,6 +45,8 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   RobotContainer() {
+    //BUILD THE SHUFFLEBOARD
+    buildShuffleBoard();
     // Configure the button bindings
     configureButtonBindings();
   }
@@ -82,5 +86,15 @@ public class RobotContainer {
   public boolean deadzone(double doubleArgument) {
     if(Math.abs(doubleArgument) < Constants.DEADZONE) return false;
     else return true;
+  }
+
+  //Shuffleboard functions
+  private void buildDriverTab() {
+    ShuffleboardTab motors = Shuffleboard.getTab("SmartDashboard");
+    motors.add("Motor Voltage", true).withPosition(4, 0).withWidget(BuiltInWidgets.kNumberBar);
+  }
+
+  private void buildShuffleBoard() {
+    buildDriverTab();
   }
 }
