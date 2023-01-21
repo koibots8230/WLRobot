@@ -40,6 +40,7 @@ public class RobotContainer {
   private final pidSetMotor rightDriveCommand = new pidSetMotor(rightDriveSubsystem, driverController, Constants.CONTROLLER_RIGHT_AXIS);
   private final AutonomousCommand m_AutonomousCommand = null;
   private final CalibrateGyroCommand calibrateGyroCommand = new CalibrateGyroCommand(sensorSubsystem);
+  
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   RobotContainer() {
@@ -69,6 +70,7 @@ public class RobotContainer {
 
     Trigger calibrateGyroTrigger = driverController.b().debounce(1, DebounceType.kBoth);
     calibrateGyroTrigger.onTrue(calibrateGyroCommand);
+    
   }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class
@@ -81,7 +83,7 @@ public class RobotContainer {
   }
 
   public boolean deadzone(double doubleArgument) {
-    if(Math.abs(doubleArgument) < Constants.DEADZONE) return false;
+    if(Math.abs(doubleArgument) + Constants.JOYSTICK_CENTERPOINT < Constants.DEADZONE) return false;
     else return true;
   }
 
