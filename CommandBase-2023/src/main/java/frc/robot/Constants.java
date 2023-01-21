@@ -29,10 +29,10 @@ public final class Constants {
     public static final double kiAuto = 0.5;
     public static final double kdAuto = 0.5;
 //Miscellaneous Constants
-    public static final double DEADZONE = 0.15;
+    public static final double DEADZONE = 0.1;
     public static final double AutoSpeed = 0.2;
     public static final double MAX_NORMAL_SPEED = 0.5;
     public static final int CONTROLLER_LEFT_AXIS = 1;
     public static final int CONTROLLER_RIGHT_AXIS = 5;
-    public static final double JOYSTICK_CENTERPOINT = 0.05;
+    public static final double JOYSTICK_CENTERPOINT = 0.1;
 }

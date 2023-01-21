@@ -83,7 +83,7 @@ public class RobotContainer {
   }
 
   public boolean deadzone(double doubleArgument) {
-    if(Math.abs(doubleArgument) + Constants.JOYSTICK_CENTERPOINT < Constants.DEADZONE) return false;
+    if(Math.abs(doubleArgument) - Constants.JOYSTICK_CENTERPOINT < Constants.DEADZONE) return false;
     else return true;
   }
 
