@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants;
@@ -23,11 +24,13 @@ public class pidSetMotor extends PIDCommand {
         // This should return the measurement
         () -> _Subsystem.getEncoder(),
         // This should return the setpoint (can also be a constant)
-        () -> _Controller.getRawAxis(_controlAxis),
+        () -> Math.pow(_Controller.getRawAxis(_controlAxis), 3),
         // This uses the output
         output -> {
           // Use the output here
-          _Subsystem.setMotor(output);
+          double actualOutput = output / (1 + Math.abs(output));
+          _Subsystem.setMotor(actualOutput);
+          SmartDashboard.putNumber("PID Raw Output", output);
         });
     driveSubsystem = _Subsystem;
     // Use addRequirements() here to declare subsystem dependencies.
