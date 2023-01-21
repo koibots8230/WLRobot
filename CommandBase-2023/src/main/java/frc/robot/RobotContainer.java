@@ -88,10 +88,12 @@ public class RobotContainer {
   }
 
   private void buildDriverTab() {
-    //ShuffleboardTab motors = Shuffleboard.getTab("SmartDashboard");
-    //motors.add("Motor Voltage", true).withPosition(4, 0).withWidget(BuiltInWidgets.kTextView);
+    ShuffleboardTab motors = Shuffleboard.getTab("SmartDashboard");
+    motors.add("Motor Voltage", true).withPosition(4, 0).withWidget(BuiltInWidgets.kTextView);
     ShuffleboardTab pidOutput = Shuffleboard.getTab("SmartDashboard");
-    pidOutput.add("PID Raw Output", true).withPosition(4, 0).withWidget(BuiltInWidgets.kGraph);
+    pidOutput.add("PID output", true).withPosition(4, 0).withWidget(BuiltInWidgets.kTextView);
+    ShuffleboardTab gyroPosition = Shuffleboard.getTab("SmartDashboard");
+    gyroPosition.add("Current Gyro Angle", true).withPosition(4, 0).withWidget(BuiltInWidgets.kTextView);
   }
 
   private void buildShuffleboard() {

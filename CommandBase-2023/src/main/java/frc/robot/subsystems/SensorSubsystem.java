@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class SensorSubsystem extends SubsystemBase {
   /** Creates a new SensorSubsystem. */
@@ -15,7 +16,7 @@ public class SensorSubsystem extends SubsystemBase {
     gyro.calibrate();
   }
 
-  public double getAngle() {
+  public double getGyroAngle() {
     return gyro.getAngle();
   }
 
@@ -26,5 +27,6 @@ public class SensorSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putNumber("Current Gyro Angle", getGyroAngle());
   }
 }

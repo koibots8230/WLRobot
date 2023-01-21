@@ -21,7 +21,7 @@ public class AutonomousCommand extends PIDCommand {
         // The controller that the command will use
         new PIDController(Constants.kpAuto, Constants.kiAuto, Constants.kdAuto),
         // This should return the measurement
-        () -> _sensors.getAngle(),
+        () -> _sensors.getGyroAngle(),
         // This should return the setpoint (can also be a constant)
         () -> 0,
         // This uses the output
@@ -37,7 +37,7 @@ public class AutonomousCommand extends PIDCommand {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (sensors.getAngle() < 2.5) {
+    if (sensors.getGyroAngle() < 2.5) {
       return true;
     }
     return false;

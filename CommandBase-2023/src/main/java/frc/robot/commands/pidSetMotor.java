@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -29,8 +30,15 @@ public class pidSetMotor extends PIDCommand {
         output -> {
           // Use the output here
          // double actualOutput = output / (1 + Math.abs(output));
-          _Subsystem.setMotor(output);
-          SmartDashboard.putNumber("PID Raw Output", output);
+         Boolean isSlow = _Controller.getHID().getAButtonPressed();
+         double adjustedOutput;
+         if (isSlow) {
+          adjustedOutput =  output * Constants.SLOW_MODE_FACTOR;
+         } else {
+          adjustedOutput = output;
+         }
+          _Subsystem.setMotor(adjustedOutput);
+          SmartDashboard.putNumber("PID Output", output);
         });
     driveSubsystem = _Subsystem;
     // Use addRequirements() here to declare subsystem dependencies.
