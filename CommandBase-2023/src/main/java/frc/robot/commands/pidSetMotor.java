@@ -30,7 +30,7 @@ public class pidSetMotor extends PIDCommand {
         output -> {
           // Use the output here
          // double actualOutput = output / (1 + Math.abs(output));
-         Boolean isSlow = _Controller.getHID().getAButtonPressed();
+         Boolean isSlow = _Controller.getHID().getRightBumperPressed();
          double adjustedOutput;
          if (isSlow) {
           adjustedOutput =  output * Constants.SLOW_MODE_FACTOR;
