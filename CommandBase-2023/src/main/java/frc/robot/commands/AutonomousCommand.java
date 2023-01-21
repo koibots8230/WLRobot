@@ -7,7 +7,6 @@ package frc.robot.commands;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.Constants;
-import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.SensorSubsystem;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -17,7 +16,7 @@ public class AutonomousCommand extends PIDCommand {
   private SensorSubsystem sensors;
 
   /** Creates a new AutonomousCommand. */
-  public AutonomousCommand(DriveTrainSubsystem _drive, SensorSubsystem _sensors) {
+  public AutonomousCommand(SensorSubsystem _sensors) {
     super(
         // The controller that the command will use
         new PIDController(Constants.kpAuto, Constants.kiAuto, Constants.kdAuto),
@@ -28,11 +27,9 @@ public class AutonomousCommand extends PIDCommand {
         // This uses the output
         output -> {
           // Use the output here
-          _drive.pidActivateLeft(output);
-          _drive.pidActivateRight(output);
         });
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(_drive, _sensors);
+    addRequirements(_sensors);
     sensors = _sensors;
     // Configure additional PID options by calling `getController` here.
   }

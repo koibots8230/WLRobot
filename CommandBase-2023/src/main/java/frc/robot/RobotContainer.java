@@ -6,7 +6,13 @@ package frc.robot;
 
 import java.util.function.BooleanSupplier;
 
+import javax.security.auth.login.FailedLoginException;
+
+import com.ctre.phoenix.motorcontrol.ControlMode;
+
 import java.lang.Math;
+import java.lang.ModuleLayer.Controller;
+
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 
@@ -26,12 +32,12 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final CommandXboxController driverController = new CommandXboxController(Constants.CONTROLLER_PORT);
-  private final DriveTrainSubsystem m_DriveTrainSubsystem = new DriveTrainSubsystem(driverController);
-  private final SensorSubsystem m_SensorSubsystem = new SensorSubsystem();
-  private final AutonomousCommand m_AutonomousCommand = new AutonomousCommand(m_DriveTrainSubsystem, m_SensorSubsystem);
-  private final DriveCommandGroup driveTrain = new DriveCommandGroup(m_DriveTrainSubsystem);
-  private final pidSetLeftCommand moveLeft = new pidSetLeftCommand(m_DriveTrainSubsystem);
-  private final pidSetRightCommand moveRight = new pidSetRightCommand(m_DriveTrainSubsystem);
+  private final SensorSubsystem sensorSubsystem = new SensorSubsystem();
+  private final TankDriveSubsystemBase leftDriveSubsystem = new TankDriveSubsystemBase(Constants.PRIMARY_LEFT_MOTOR_PORT, Constants.SECONDARY_LEFT_MOTOR_PORT, ControlMode.PercentOutput);
+  private final TankDriveSubsystemBase rightDriveSubsystem = new TankDriveSubsystemBase(Constants.PRIMARY_RIGHT_MOTOR_PORT, Constants.SECONDARY_RIGHT_MOTOR_PORT, ControlMode.PercentOutput);
+  private final pidSetMotor leftDriveCommand = new pidSetMotor(leftDriveSubsystem, driverController, Constants.CONTROLLER_LEFT_AXIS);
+  private final pidSetMotor rightDriveCommand = new pidSetMotor(rightDriveSubsystem, driverController, Constants.CONTRROLLER_RIGHT_AXIS);
+  private final AutonomousCommand m_AutonomousCommand = null;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   RobotContainer() {
@@ -46,25 +52,17 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    BooleanSupplier rightDeadzoneSupplier = () ->  Math.abs(driverController.getRawAxis(5)) > Constants.DEADZONE;
-    BooleanSupplier leftDeadzoneSupplier = () -> Math.abs(driverController.getRawAxis(1)) > Constants.DEADZONE;
-    
-    if (Math.abs(driverController.getRawAxis(5)) > Constants.DEADZONE) {
-      driveTrain.execute();
-
-    }
-    Trigger rightTrigger = new Trigger(rightDeadzoneSupplier);
-    rightTrigger.whileTrue(moveRight);
-
-    Trigger leftTrigger = new Trigger(leftDeadzoneSupplier);
-    leftTrigger.whileTrue(moveLeft);
-
-    Trigger calibrateTrigger = driverController.b();
-    //calibrateTrigger.onTrue(gyroCalibrate);
+    BooleanSupplier rightThumbstickSupplier = () ->  deadzone(driverController.getRawAxis(Constants.CONTROLLER_LEFT_AXIS));
+    BooleanSupplier leftThumbstickSupplier = () ->  deadzone(driverController.getRawAxis(Constants.CONTROLLER_LEFT_AXIS));
+    BooleanSupplier rightMotorSupplier = () -> rightDriveSubsystem.getEncoder() == 0;
+    BooleanSupplier leftMotorSupplier = () -> leftDriveSubsystem.getEncoder() == 0;
+    Trigger rightDriveTrigger = new Trigger(rightThumbstickSupplier).and(rightMotorSupplier);
+    rightDriveTrigger.whileTrue(rightDriveCommand);
+    Trigger leftDriveTrigger = new Trigger(leftThumbstickSupplier).and(leftMotorSupplier);
+    leftDriveTrigger.whileTrue(leftDriveCommand);
   }
-
   /**
-   * Use this to pass the autonomous command to the main {@link Robot} class.
+   * Use this to pass the autonomous command to the main {@link Robot} class
    *
    * @return the command to run in autonomous
    */
@@ -73,8 +71,8 @@ public class RobotContainer {
     return m_AutonomousCommand;
   }
 
-  public double deadzone(double doubleArgument) {
-    if(Math.abs(doubleArgument) < Constants.DEADZONE) return 0;
-    else return doubleArgument;
+  public boolean deadzone(double doubleArgument) {
+    if(Math.abs(doubleArgument) < Constants.DEADZONE) return false;
+    else return true;
   }
 }

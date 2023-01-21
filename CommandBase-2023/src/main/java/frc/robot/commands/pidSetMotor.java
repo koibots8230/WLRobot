@@ -6,31 +6,34 @@ package frc.robot.commands;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants;
-import frc.robot.subsystems.DriveTrainSubsystem;
+import frc.robot.subsystems.TankDriveSubsystemBase;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class pidDrive extends PIDCommand {
-  /** Creates a new pidDrive. */
-  public pidDrive(DriveTrainSubsystem _driveSubsystem) {
+public class pidSetMotor extends PIDCommand {
+  private TankDriveSubsystemBase driveSubsystem;
+  /** Creates a new pidSetLeftCommand. */
+  public pidSetMotor(TankDriveSubsystemBase _Subsystem, CommandXboxController _Controller, int _controlAxis) {
     super(
         // The controller that the command will use
         new PIDController(Constants.kpDrive, Constants.kiDrive, Constants.kdDrive),
         // This should return the measurement
-        () -> _driveSubsystem.leftMeasurement() + _driveSubsystem.rightMeasurment(),
+        () -> _Subsystem.getEncoder(),
         // This should return the setpoint (can also be a constant)
-        () -> _driveSubsystem.controller.getRawAxis(1) + _driveSubsystem.controller.getRawAxis(5),
+        () -> _Controller.getRawAxis(_controlAxis),
         // This uses the output
         output -> {
           // Use the output here
-          _driveSubsystem.pidActivateLeft(output * (Constants.maxNormalSpeed * _driveSubsystem.controller.getRawAxis(1)/ Constants.maxNormalSpeed));
-          _driveSubsystem.pidActivateRight(output * (Constants.maxNormalSpeed * _driveSubsystem.controller.getRawAxis(1)/ Constants.maxNormalSpeed));
-
+          _Subsystem.setMotor(output);
         });
+    driveSubsystem = _Subsystem;
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(driveSubsystem);
     // Configure additional PID options by calling `getController` here.
+    
   }
 
   // Returns true when the command should end.

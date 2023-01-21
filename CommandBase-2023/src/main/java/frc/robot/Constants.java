@@ -14,16 +14,16 @@ package frc.robot;
  */
 public final class Constants {
 //Hardware Ports:
-    public static final int FRONT_LEFT_MOTOR_PORT = 0;
-    public static final int FRONT_RIGHT_MOTOR_PORT = 1;
-    public static final int BACK_LEFT_MOTOR_PORT = 2;
-    public static final int BACK_RIGHT_MOTOR_PORT = 3;
+    public static final int PRIMARY_LEFT_MOTOR_PORT = 0;
+    public static final int PRIMARY_RIGHT_MOTOR_PORT = 1;
+    public static final int SECONDARY_LEFT_MOTOR_PORT = 2;
+    public static final int SECONDARY_RIGHT_MOTOR_PORT = 3;
     public static final int CONTROLLER_PORT = 0;
 //PID Constants
-    //PID Constants for pidSetLeftCommand and pidSetRightCommand
-    public static final double kpDrive = 0.6;
-    public static final double kiDrive = 0.2;
-    public static final double kdDrive = 0.7;
+    //PID Constants for pidSetMotor
+    public static final double kpDrive = 0.2; 
+    public static final double kiDrive = 0.6;
+    public static final double kdDrive = 0;
     //PID Constants for Autonomous Command
     public static final double kpAuto = 0.5;
     public static final double kiAuto = 0.5;
@@ -31,5 +31,7 @@ public final class Constants {
 //Miscellaneous Constants
     public static final double DEADZONE = 0.15;
     public static final double AutoSpeed = 0.2;
-    public static final double maxNormalSpeed = 0.5;
+    public static final double MAX_NORMAL_SPEED = 0.5;
+    public static final int CONTROLLER_LEFT_AXIS = 1;
+    public static final int CONTRROLLER_RIGHT_AXIS = 5;
 }
