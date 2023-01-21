@@ -13,6 +13,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import java.lang.Math;
 import java.lang.ModuleLayer.Controller;
 
+import edu.wpi.first.math.filter.Debouncer.DebounceType;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 
@@ -38,6 +39,7 @@ public class RobotContainer {
   private final pidSetMotor leftDriveCommand = new pidSetMotor(leftDriveSubsystem, driverController, Constants.CONTROLLER_LEFT_AXIS);
   private final pidSetMotor rightDriveCommand = new pidSetMotor(rightDriveSubsystem, driverController, Constants.CONTRROLLER_RIGHT_AXIS);
   private final AutonomousCommand m_AutonomousCommand = null;
+  private final CalibrateGyroCommand calibrateGyroCommand = new CalibrateGyroCommand(sensorSubsystem);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   RobotContainer() {
@@ -54,12 +56,18 @@ public class RobotContainer {
   private void configureButtonBindings() {
     BooleanSupplier rightThumbstickSupplier = () ->  deadzone(driverController.getRawAxis(Constants.CONTROLLER_LEFT_AXIS));
     BooleanSupplier leftThumbstickSupplier = () ->  deadzone(driverController.getRawAxis(Constants.CONTROLLER_LEFT_AXIS));
+
     BooleanSupplier rightMotorSupplier = () -> rightDriveSubsystem.getEncoder() == 0;
     BooleanSupplier leftMotorSupplier = () -> leftDriveSubsystem.getEncoder() == 0;
+
     Trigger rightDriveTrigger = new Trigger(rightThumbstickSupplier).and(rightMotorSupplier);
     rightDriveTrigger.whileTrue(rightDriveCommand);
+
     Trigger leftDriveTrigger = new Trigger(leftThumbstickSupplier).and(leftMotorSupplier);
     leftDriveTrigger.whileTrue(leftDriveCommand);
+
+    Trigger calibrateGyroTrigger = driverController.b().debounce(1, DebounceType.kBoth);
+    calibrateGyroTrigger.onTrue(calibrateGyroCommand);
   }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class
