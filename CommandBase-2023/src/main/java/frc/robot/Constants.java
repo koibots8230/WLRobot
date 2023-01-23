@@ -18,7 +18,7 @@ public final class Constants {
     public static final int PRIMARY_RIGHT_MOTOR_PORT = 1;
     public static final int SECONDARY_LEFT_MOTOR_PORT = 2;
     public static final int SECONDARY_RIGHT_MOTOR_PORT = 3;
-    public static final int CONTROLLER_PORT = 0;
+
 //PID Constants
     //PID Constants for pidSetMotor
     public static final double kpDrive = 1; 
@@ -28,12 +28,14 @@ public final class Constants {
     public static final double kpAuto = 0.5;
     public static final double kiAuto = 0.5;
     public static final double kdAuto = 0.5;
-//Miscellaneous Constants
-    public static final double DEADZONE = 0.1;
-    public static final double AutoSpeed = 0.2;
-    public static final double MAX_NORMAL_SPEED = 0.5;
+//Controller Constants
+    public static final int CONTROLLER_PORT = 0;
     public static final int CONTROLLER_LEFT_AXIS = 1;
     public static final int CONTROLLER_RIGHT_AXIS = 5;
     public static final double JOYSTICK_CENTERPOINT = 0.1;
     public static final double SLOW_MODE_FACTOR = 0.5;
+    public static final double DEADZONE = 0.1;
+//Miscellaneous Constants
+    public static final double MAX_NORMAL_SPEED = 0.5;
+    public static final double GRAVITIONAl_ACCELERATION = 9.807;
 }

@@ -8,15 +8,17 @@ import java.util.function.BooleanSupplier;
 
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.kauailabs.navx.frc.AHRS;
 
 import java.lang.Math;
 
-import edu.wpi.first.math.filter.Debouncer.DebounceType;
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.*;
 
 import frc.robot.subsystems.*;
@@ -33,18 +35,21 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final CommandXboxController driverController = new CommandXboxController(Constants.CONTROLLER_PORT);
-  private final SensorSubsystem sensorSubsystem = new SensorSubsystem();
+  private final AHRS gyro = new AHRS(SPI.Port.kMXP);
   private final TankDriveSubsystemBase leftDriveSubsystem = new TankDriveSubsystemBase(Constants.PRIMARY_LEFT_MOTOR_PORT, Constants.SECONDARY_LEFT_MOTOR_PORT, ControlMode.PercentOutput);
   private final TankDriveSubsystemBase rightDriveSubsystem = new TankDriveSubsystemBase(Constants.PRIMARY_RIGHT_MOTOR_PORT, Constants.SECONDARY_RIGHT_MOTOR_PORT, true, true, ControlMode.PercentOutput);
   private final pidSetMotor leftDriveCommand = new pidSetMotor(leftDriveSubsystem, driverController, Constants.CONTROLLER_LEFT_AXIS);
   private final pidSetMotor rightDriveCommand = new pidSetMotor(rightDriveSubsystem, driverController, Constants.CONTROLLER_RIGHT_AXIS);
-  private final AutonomousCommand m_AutonomousCommand = null;
-  private final CalibrateGyroCommand calibrateGyroCommand = new CalibrateGyroCommand(sensorSubsystem);
+  private final AutonomousCommand m_AutonomousCommand = new AutonomousCommand(gyro, rightDriveSubsystem, leftDriveSubsystem);
   
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   RobotContainer() {
     // Configure the button bindings
+    gyro.calibrate();
+    while (gyro.isCalibrating()) {
+      SmartDashboard.putBoolean("Gyro Calibratig", gyro.isCalibrating());
+    }
     buildShuffleboard();
     configureButtonBindings();
   }
@@ -67,9 +72,6 @@ public class RobotContainer {
 
     Trigger leftDriveTrigger = new Trigger(leftThumbstickSupplier).and(leftMotorSupplier);
     leftDriveTrigger.whileTrue(leftDriveCommand);
-
-    Trigger calibrateGyroTrigger = driverController.b().debounce(1, DebounceType.kBoth);
-    calibrateGyroTrigger.onTrue(calibrateGyroCommand);
     
   }
   /**

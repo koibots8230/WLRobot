@@ -4,42 +4,23 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.wpilibj2.command.PIDCommand;
-import frc.robot.Constants;
-import frc.robot.subsystems.SensorSubsystem;
+import com.kauailabs.navx.frc.AHRS;
+
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.subsystems.TankDriveSubsystemBase;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class AutonomousCommand extends PIDCommand {
-  private SensorSubsystem sensors;
-
+public class AutonomousCommand extends SequentialCommandGroup {
   /** Creates a new AutonomousCommand. */
-  public AutonomousCommand(SensorSubsystem _sensors) {
-    super(
-        // The controller that the command will use
-        new PIDController(Constants.kpAuto, Constants.kiAuto, Constants.kdAuto),
-        // This should return the measurement
-        () -> _sensors.getGyroAngle(),
-        // This should return the setpoint (can also be a constant)
-        () -> 0,
-        // This uses the output
-        output -> {
-          // Use the output here
-        });
-    // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(_sensors);
-    sensors = _sensors;
-    // Configure additional PID options by calling `getController` here.
+  public AutonomousCommand(AHRS _Gyro, TankDriveSubsystemBase _rightDrive, TankDriveSubsystemBase _leftDrive) {
+    // Add your commands in the addCommands() call, e.g.
+    // addCommands(new FooCommand(), new BarCommand());
+    addCommands(
+      new AutoBalanceCommand(_Gyro, _rightDrive, _leftDrive)
+    );
   }
 
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    if (sensors.getGyroAngle() < 2.5) {
-      return true;
-    }
-    return false;
-  }
+
 }

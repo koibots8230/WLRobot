@@ -4,37 +4,42 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.SensorSubsystem;
+import com.kauailabs.navx.frc.AHRS;
 
-public class CalibrateGyroCommand extends CommandBase {
-  private final SensorSubsystem sensors;
-  /** Creates a new CalibrateGyro. */
-  public CalibrateGyroCommand(SensorSubsystem _sensors) {
+import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
+import frc.robot.subsystems.TankDriveSubsystemBase;
+
+public class AutoBalanceCommand extends CommandBase {
+  private final AHRS gyro;
+  /** Creates a new AutoBalanceCommand. */
+  public AutoBalanceCommand(AHRS _Gyro, TankDriveSubsystemBase _rightDrive, TankDriveSubsystemBase _leftDrive) {
     // Use addRequirements() here to declare subsystem dependencies.
-    //addRequirements(_sensors);
-    sensors = _sensors;
+    gyro = _Gyro;
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    sensors.calibrateGyro();
+    double motorSpeed = Constants.GRAVITIONAl_ACCELERATION * Math.sin(gyro.getRoll());
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    if (Math.abs(gyro.getRoll()) <= 2.5) {
+      return true;
+    }
+    return false;
   }
 }
