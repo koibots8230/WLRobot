@@ -36,8 +36,8 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final CommandXboxController driverController = new CommandXboxController(Constants.CONTROLLER_PORT);
   private final AHRS gyro = new AHRS(SPI.Port.kMXP);
-  private final TankDriveSubsystemBase leftDriveSubsystem = new TankDriveSubsystemBase(Constants.PRIMARY_LEFT_MOTOR_PORT, Constants.SECONDARY_LEFT_MOTOR_PORT, ControlMode.PercentOutput);
-  private final TankDriveSubsystemBase rightDriveSubsystem = new TankDriveSubsystemBase(Constants.PRIMARY_RIGHT_MOTOR_PORT, Constants.SECONDARY_RIGHT_MOTOR_PORT, true, true, ControlMode.PercentOutput);
+  private final TankDriveSubsystemBase leftDriveSubsystem = new TankDriveSubsystemBase(Constants.PRIMARY_LEFT_MOTOR_PORT, Constants.SECONDARY_LEFT_MOTOR_PORT, ControlMode.Position);
+  private final TankDriveSubsystemBase rightDriveSubsystem = new TankDriveSubsystemBase(Constants.PRIMARY_RIGHT_MOTOR_PORT, Constants.SECONDARY_RIGHT_MOTOR_PORT, true, true, ControlMode.Position);
   private final pidSetMotor leftDriveCommand = new pidSetMotor(leftDriveSubsystem, driverController, Constants.CONTROLLER_LEFT_AXIS);
   private final pidSetMotor rightDriveCommand = new pidSetMotor(rightDriveSubsystem, driverController, Constants.CONTROLLER_RIGHT_AXIS);
   private final AutonomousCommand m_AutonomousCommand = new AutonomousCommand(gyro, rightDriveSubsystem, leftDriveSubsystem);
