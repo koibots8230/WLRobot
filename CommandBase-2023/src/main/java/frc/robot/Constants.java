@@ -22,12 +22,13 @@ public final class Constants {
 //PID Constants
     //PID Constants for pidSetMotor
     public static final double kpDrive = 1; 
-    public static final double kiDrive = 0.1;
-    public static final double kdDrive = 0.01;
-    //PID Constants for Autonomous Command
+    public static final double kiDrive = 0;
+    public static final double kdDrive = 0;
+    //Constants for Autonomous Command
     public static final double kpAuto = 0.5;
     public static final double kiAuto = 0.5;
     public static final double kdAuto = 0.5;
+    public static final double AUTO_SPEED = 0.1;
 //Controller Constants
     public static final int CONTROLLER_PORT = 0;
     public static final int CONTROLLER_LEFT_AXIS = 1;

@@ -55,7 +55,7 @@
               "min": -1.1
             }
           ],
-          "height": 872,
+          "height": 674,
           "series": [
             {
               "color": [
@@ -77,7 +77,9 @@
             }
           ]
         }
-      ],
+      ]
+    },
+    "Plot <1>": {
       "window": {
         "visible": false
       }

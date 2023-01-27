@@ -4,10 +4,10 @@
 
 package frc.robot.commands;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.TankDriveSubsystemBase;
 
 public class AutoBalanceCommand extends CommandBase {
@@ -24,20 +24,18 @@ public class AutoBalanceCommand extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    rightDrive.setMotor(0);
+    rightDrive.setMotor(Constants.AUTO_SPEED * Math.signum(gyro.getRoll()) * Math.signum(gyro.getWorldLinearAccelX()));
+    leftDrive.setMotor(Constants.AUTO_SPEED * Math.signum(gyro.getRoll()) * (-1 * Math.signum(gyro.getWorldLinearAccelX())));
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override
