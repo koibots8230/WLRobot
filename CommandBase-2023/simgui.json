@@ -20,9 +20,6 @@
         "header": {
           "open": true
         }
-      },
-      "window": {
-        "visible": false
       }
     },
     "RoboRIO": {
@@ -34,6 +31,16 @@
   "NTProvider": {
     "types": {
       "/FMSInfo": "FMSInfo"
+    }
+  },
+  "NetworkTables": {
+    "transitory": {
+      "Shuffleboard": {
+        "SmartDashboard": {
+          "open": true
+        },
+        "open": true
+      }
     }
   },
   "Plot": {
@@ -58,10 +65,22 @@
                 1.0
               ],
               "id": "CANMotor:Victor SPX[0]-percentOutput"
+            },
+            {
+              "color": [
+                0.8666667342185974,
+                0.5176470875740051,
+                0.32156863808631897,
+                1.0
+              ],
+              "id": "NT:/Shuffleboard/SmartDashboard/PID output"
             }
           ]
         }
-      ]
+      ],
+      "window": {
+        "visible": false
+      }
     }
   }
 }

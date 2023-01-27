@@ -37,5 +37,4 @@ public final class Constants {
     public static final double DEADZONE = 0.1;
 //Miscellaneous Constants
     public static final double MAX_NORMAL_SPEED = 0.5;
-    public static final double GRAVITIONAl_ACCELERATION = 9.807;
 }

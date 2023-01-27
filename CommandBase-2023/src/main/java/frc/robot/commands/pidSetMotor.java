@@ -24,7 +24,7 @@ public class pidSetMotor extends PIDCommand {
         // This should return the measurement
         () -> _Subsystem.getEncoder(),
         // This should return the setpoint (can also be a constant)
-        () -> Math.pow(_Controller.getRawAxis(_controlAxis), 2) * Math.signum(_Controller.getRawAxis(_controlAxis)),
+        () -> (Math.pow(_Controller.getRawAxis(_controlAxis), 2) * Math.signum(_Controller.getRawAxis(_controlAxis))) * 12,
         // This uses the output
         output -> {
           // Use the output here
@@ -36,7 +36,7 @@ public class pidSetMotor extends PIDCommand {
          } else {
           adjustedOutput = output;
          }
-          _Subsystem.setMotor(adjustedOutput);
+          _Subsystem.setMotor(adjustedOutput / 24);
           SmartDashboard.putNumber("PID Output", output);
         });
     driveSubsystem = _Subsystem;

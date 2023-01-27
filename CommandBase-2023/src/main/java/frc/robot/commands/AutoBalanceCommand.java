@@ -25,21 +25,18 @@ public class AutoBalanceCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    rightDrive.setControlMode(ControlMode.Velocity);
-    leftDrive.setControlMode(ControlMode.Velocity);
+
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    rightDrive.setMotor(0.5);
+    rightDrive.setMotor(0);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    leftDrive.setControlMode(ControlMode.PercentOutput);
-    rightDrive.setControlMode(ControlMode.PercentOutput);
   }
 
   // Returns true when the command should end.

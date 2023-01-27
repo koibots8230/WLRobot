@@ -37,7 +37,7 @@ public class TankDriveSubsystemBase extends SubsystemBase {
 
   
   public double getEncoder() {
-    return primaryVictorSPX.get();
+    return primaryVictorSPX.getMotorOutputVoltage();
   }
 
   public void setMotor(double motorSpeed) {
