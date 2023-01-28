@@ -39,8 +39,8 @@ public class AutoBalanceCommand extends CommandBase {
       leftDirection = gyro.getRoll();
     }
 
-    rightDrive.setMotor(Constants.AUTO_SPEED * Math.signum(rightDirection));
-    leftDrive.setMotor(Constants.AUTO_SPEED * Math.signum(leftDirection));
+    rightDrive.setMotor(Constants.AUTO_SPEED * -1 * Math.signum(rightDirection));
+    leftDrive.setMotor(Constants.AUTO_SPEED * -1 * Math.signum(leftDirection));
   }
 
   // Called once the command ends or is interrupted.
