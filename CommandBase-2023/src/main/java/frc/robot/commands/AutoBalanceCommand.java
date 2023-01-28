@@ -29,13 +29,28 @@ public class AutoBalanceCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    rightDrive.setMotor(Constants.AUTO_SPEED * Math.signum(gyro.getRoll()) * Math.signum(gyro.getWorldLinearAccelX()));
-    leftDrive.setMotor(Constants.AUTO_SPEED * Math.signum(gyro.getRoll()) * (-1 * Math.signum(gyro.getWorldLinearAccelX())));
+    double rightDirection = 0;
+    double leftDirection = 0;
+    if (Math.abs(gyro.getWorldLinearAccelX()) > 0.2) {
+      rightDirection = gyro.getRoll() * gyro.getWorldLinearAccelX();
+      leftDirection = gyro.getRoll() * gyro.getWorldLinearAccelX() * -1;
+    } else {
+      rightDirection = gyro.getRoll();
+      leftDirection = gyro.getRoll();
+    }
+
+    rightDrive.setMotor(Constants.AUTO_SPEED * Math.signum(rightDirection));
+    leftDrive.setMotor(Constants.AUTO_SPEED * Math.signum(leftDirection));
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    if (false == interrupted) {
+      rightDrive.setMotor(0);
+      leftDrive.setMotor(0);
+    }
+  }
 
   // Returns true when the command should end.
   @Override
