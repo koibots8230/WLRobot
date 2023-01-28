@@ -31,16 +31,16 @@ public class AutoBalanceCommand extends CommandBase {
   public void execute() {
     double rightDirection = 0;
     double leftDirection = 0;
-    if (Math.abs(gyro.getWorldLinearAccelX()) > 0.2) {
+    if (Math.abs(gyro.getWorldLinearAccelX()) > 0.8) {
       rightDirection = gyro.getRoll() * gyro.getWorldLinearAccelX();
       leftDirection = gyro.getRoll() * gyro.getWorldLinearAccelX() * -1;
     } else {
       rightDirection = gyro.getRoll();
       leftDirection = gyro.getRoll();
     }
-
-    rightDrive.setMotor(Constants.AUTO_SPEED * -1 * Math.signum(rightDirection));
-    leftDrive.setMotor(Constants.AUTO_SPEED * -1 * Math.signum(leftDirection));
+    
+    rightDrive.setMotor(Constants.AUTO_SPEED * Math.signum(rightDirection));
+    leftDrive.setMotor(Constants.AUTO_SPEED * Math.signum(leftDirection));
   }
 
   // Called once the command ends or is interrupted.
