@@ -49,6 +49,7 @@ public class AutoBalanceCommand extends CommandBase {
     if (false == interrupted) {
       rightDrive.setMotor(0);
       leftDrive.setMotor(0);
+      new waitCommand(20, gyro, leftDrive, rightDrive).schedule();
     }
   }
 

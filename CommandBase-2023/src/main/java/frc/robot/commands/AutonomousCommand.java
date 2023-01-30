@@ -18,18 +18,6 @@ public class AutonomousCommand extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new AutoBalanceCommand(_Gyro, _rightDrive, _leftDrive),
-      new waitCommand(20),
-      new AutoBalanceCommand(_Gyro, _rightDrive, _leftDrive),
-      new waitCommand(20),
-      new AutoBalanceCommand(_Gyro, _rightDrive, _leftDrive),
-      new waitCommand(20),
-      new AutoBalanceCommand(_Gyro, _rightDrive, _leftDrive),
-      new waitCommand(20),
-      new AutoBalanceCommand(_Gyro, _rightDrive, _leftDrive),
-      new waitCommand(20),
-      new AutoBalanceCommand(_Gyro, _rightDrive, _leftDrive),
-      new waitCommand(20),
       new AutoBalanceCommand(_Gyro, _rightDrive, _leftDrive)
     );
   }

@@ -4,15 +4,24 @@
 
 package frc.robot.commands;
 
+import com.kauailabs.navx.frc.AHRS;
+
+import frc.robot.subsystems.TankDriveSubsystemBase;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class waitCommand extends CommandBase {
   /** Creates a new waitCommand. */
   int m_waitSeconds;
   int count = 0;
-  public waitCommand(int wait20ms) {
+  private final AHRS gyro;
+  private final TankDriveSubsystemBase rightDrive;
+  private final TankDriveSubsystemBase leftDrive;
+  public waitCommand(int wait20ms, AHRS _Gyro, TankDriveSubsystemBase _rightDrive, TankDriveSubsystemBase _leftDrive) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_waitSeconds = wait20ms;
+    gyro = _Gyro;
+    rightDrive = _rightDrive;
+    leftDrive = _leftDrive;
   }
 
   // Called when the command is initially scheduled.
@@ -27,7 +36,9 @@ public class waitCommand extends CommandBase {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    new AutoBalanceCommand(gyro, rightDrive, leftDrive).schedule();
+  }
 
   // Returns true when the command should end.
   @Override
