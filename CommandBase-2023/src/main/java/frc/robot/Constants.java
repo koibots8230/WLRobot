@@ -18,6 +18,8 @@ public final class Constants {
     public static final int PRIMARY_RIGHT_MOTOR_PORT = 1;
     public static final int SECONDARY_LEFT_MOTOR_PORT = 2;
     public static final int SECONDARY_RIGHT_MOTOR_PORT = 3;
+    public static final int TESTING_MOTOR_CONTROLLER_PORT = 4;
+    public static final int TEST_MOTOR_PORT = 15;
 
 //PID Constants
     //PID Constants for pidSetMotor
@@ -29,7 +31,8 @@ public final class Constants {
     public static final double kiAuto = 0.5;
     public static final double kdAuto = 0.5;
 //Controller Constants
-    public static final int CONTROLLER_PORT = 0;
+    public static final int XBOX_CONTROLLER_PORT = 0;
+    public static final int PS4_CONTROLLER_PORT = 0;
     public static final int CONTROLLER_LEFT_AXIS = 1;
     public static final int CONTROLLER_RIGHT_AXIS = 5;
     public static final double JOYSTICK_CENTERPOINT = 0.1;

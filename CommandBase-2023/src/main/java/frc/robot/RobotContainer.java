@@ -13,6 +13,7 @@ import com.kauailabs.navx.frc.AHRS;
 import java.lang.Math;
 
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
@@ -22,6 +23,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.*;
 
 import frc.robot.subsystems.*;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.CommandPS4Controller;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -34,12 +37,13 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final CommandXboxController driverController = new CommandXboxController(Constants.CONTROLLER_PORT);
+  private final CommandXboxController driverXboxController = new CommandXboxController(Constants.XBOX_CONTROLLER_PORT);
+  private final CommandPS4Controller driverPs4Controller = new CommandPS4Controller(Constants.PS4_CONTROLLER_PORT);
   private final AHRS gyro = new AHRS(SPI.Port.kMXP);
   private final TankDriveSubsystemBase leftDriveSubsystem = new TankDriveSubsystemBase(Constants.PRIMARY_LEFT_MOTOR_PORT, Constants.SECONDARY_LEFT_MOTOR_PORT, ControlMode.Position);
   private final TankDriveSubsystemBase rightDriveSubsystem = new TankDriveSubsystemBase(Constants.PRIMARY_RIGHT_MOTOR_PORT, Constants.SECONDARY_RIGHT_MOTOR_PORT, true, true, ControlMode.Position);
-  private final pidSetMotor leftDriveCommand = new pidSetMotor(leftDriveSubsystem, driverController, Constants.CONTROLLER_LEFT_AXIS);
-  private final pidSetMotor rightDriveCommand = new pidSetMotor(rightDriveSubsystem, driverController, Constants.CONTROLLER_RIGHT_AXIS);
+  private final pidSetMotor leftDriveCommand = new pidSetMotor(leftDriveSubsystem, driverXboxController, Constants.CONTROLLER_LEFT_AXIS);
+  private final pidSetMotor rightDriveCommand = new pidSetMotor(rightDriveSubsystem, driverXboxController, Constants.CONTROLLER_RIGHT_AXIS);
   private final AutonomousCommand m_AutonomousCommand = new AutonomousCommand(gyro, rightDriveSubsystem, leftDriveSubsystem);
   
 
@@ -61,8 +65,8 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    BooleanSupplier rightThumbstickSupplier = () ->  deadzone(driverController.getRawAxis(Constants.CONTROLLER_RIGHT_AXIS));
-    BooleanSupplier leftThumbstickSupplier = () ->  deadzone(driverController.getRawAxis(Constants.CONTROLLER_LEFT_AXIS));
+    BooleanSupplier rightThumbstickSupplier = () ->  deadzone(driverXboxController.getRawAxis(Constants.CONTROLLER_RIGHT_AXIS));
+    BooleanSupplier leftThumbstickSupplier = () ->  deadzone(driverXboxController.getRawAxis(Constants.CONTROLLER_LEFT_AXIS));
 
     BooleanSupplier rightMotorSupplier = () -> rightDriveSubsystem.getEncoder() == 0;
     BooleanSupplier leftMotorSupplier = () -> leftDriveSubsystem.getEncoder() == 0;
@@ -73,6 +77,8 @@ public class RobotContainer {
     Trigger leftDriveTrigger = new Trigger(leftThumbstickSupplier).and(leftMotorSupplier);
     leftDriveTrigger.whileTrue(leftDriveCommand);
     
+    Trigger runTestMotor = driverPs4Controller.L1();
+    runTestMotor.whileTrue(leftDriveSubsystem.new RunTestMotor(leftDriveSubsystem));
   }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class
