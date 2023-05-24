@@ -1,0 +1,21 @@
+[
+  {
+    "type": "java",
+    "name": "jar (in project Jankbot)",
+    "extensions": [
+      {
+        "name": "Sim GUI",
+        "libName": "/Users/caleb/Dev/Jankbot/build/jni/release/libhalsim_gui.dylib",
+        "defaultEnabled": true
+      },
+      {
+        "name": "Use Real DriverStation",
+        "libName": "/Users/caleb/Dev/Jankbot/build/jni/release/libhalsim_ds_socket.dylib",
+        "defaultEnabled": false
+      }
+    ],
+    "environment": {},
+    "libraryDir": "/Users/caleb/Dev/Jankbot/build/jni/release",
+    "mainClassName": "com.koibots.Main"
+  }
+]
