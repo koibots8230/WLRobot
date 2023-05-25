@@ -66,16 +66,8 @@ public class Robot extends TimedRobot
         .withProperties(Map.of("Label Position", "Left"));
 
     @Override
-    public void robotPeriodic()
-    {
-        CommandScheduler.getInstance().run();
-    }
-
-    @Override
-    public void teleopInit()
-    {
-        Shuffleboard.startRecording();
-
+    public void robotInit() {
+        
         rioAndCanLayout.addNumber("CAN: Utilization", () -> RobotController.getCANStatus().percentBusUtilization);
         rioAndCanLayout.addNumber("CAN: Bus Off Count", () -> RobotController.getCANStatus().busOffCount);
         rioAndCanLayout.addNumber("CAN: Errors Received", () -> RobotController.getCANStatus().receiveErrorCount);
@@ -137,6 +129,19 @@ public class Robot extends TimedRobot
         pdpFaultsLayout.addBoolean("Channel 13 - Breaker Fault", () -> pdp.getFaults().Channel13BreakerFault);
         pdpFaultsLayout.addBoolean("Channel 14 - Breaker Fault", () -> pdp.getFaults().Channel14BreakerFault);
         pdpFaultsLayout.addBoolean("Channel 15 - Breaker Fault", () -> pdp.getFaults().Channel15BreakerFault);
+
+    }
+
+    @Override
+    public void robotPeriodic()
+    {
+        CommandScheduler.getInstance().run();
+    }
+
+    @Override
+    public void teleopInit()
+    {
+        Shuffleboard.startRecording();
 
         driveSubsystem.setDefaultCommand(
             driveSubsystem.new TankDrive(controller::getLeftY, controller::getRightY)

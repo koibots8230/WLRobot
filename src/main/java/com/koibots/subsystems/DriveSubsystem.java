@@ -3,7 +3,7 @@ package com.koibots.subsystems;
 import java.util.Map;
 import java.util.function.DoubleSupplier;
 
-import com.ctre.phoenix.motorcontrol.VictorSPXControlMode;
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.networktables.GenericEntry;
@@ -15,12 +15,15 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+import static java.lang.Math.signum;
+
+
 public class DriveSubsystem extends SubsystemBase
 {
-    VictorSPX primaryLeftMotor = new VictorSPX(0);
-    VictorSPX primaryRightMotor = new VictorSPX(1);
-    VictorSPX secondaryLeftMotor = new VictorSPX(2);    
-    VictorSPX secondaryRightMotor = new VictorSPX(3);
+    VictorSPX primaryLeftMotor = new VictorSPX(12);
+    VictorSPX primaryRightMotor = new VictorSPX(13);
+    VictorSPX secondaryLeftMotor = new VictorSPX(14);    
+    VictorSPX secondaryRightMotor = new VictorSPX(15);
 
     ShuffleboardTab driveTab = Shuffleboard.getTab("Telemetry");
 
@@ -51,8 +54,8 @@ public class DriveSubsystem extends SubsystemBase
     GenericEntry maxSpeed;
 
     public DriveSubsystem() {
-        secondaryLeftMotor.follow(primaryLeftMotor);
-        secondaryRightMotor.follow(primaryRightMotor);
+        //secondaryLeftMotor.follow(primaryLeftMotor);
+        //secondaryRightMotor.follow(primaryRightMotor);
 
         maxSpeed = driveTab.add("Max Speed", 0.2)
             .withWidget(BuiltInWidgets.kNumberSlider)
@@ -60,6 +63,23 @@ public class DriveSubsystem extends SubsystemBase
             .withSize(2, 1)
             .withPosition(4, 0) // or 5 and 1
             .getEntry();
+
+
+            primaryLeftLogs.addNumber("0 - Voltage", primaryLeftMotor::getBusVoltage);
+            primaryLeftLogs.addNumber("0 - Temperature", primaryLeftMotor::getTemperature);
+            primaryLeftLogs.addNumber("0 - Output Volts", primaryLeftMotor::getMotorOutputVoltage);
+    
+            primaryRightLogs.addNumber("1 - Voltage", primaryRightMotor::getBusVoltage);
+            primaryRightLogs.addNumber("1 - Temperature", primaryRightMotor::getTemperature);
+            primaryRightLogs.addNumber("1 - Output Volts", primaryRightMotor::getMotorOutputVoltage);
+    
+            secondaryLeftLogs.addNumber("2 - Voltage", secondaryLeftMotor::getBusVoltage);
+            secondaryLeftLogs.addNumber("2 - Temperature", secondaryLeftMotor::getTemperature);
+            secondaryLeftLogs.addNumber("2 - Output Volts", secondaryLeftMotor::getMotorOutputVoltage);
+    
+            secondaryRightLogs.addNumber("3 - Voltage", secondaryRightMotor::getBusVoltage);
+            secondaryRightLogs.addNumber("3 - Temperature", secondaryRightMotor::getTemperature);
+            secondaryRightLogs.addNumber("3 - Output Volts", secondaryRightMotor::getMotorOutputVoltage);
     }
 
     private double getMaxSpeed() {
@@ -67,26 +87,8 @@ public class DriveSubsystem extends SubsystemBase
     }
 
     public void setSpeed(double leftSpeed, double rightSpeed) {
-        primaryLeftMotor.set(VictorSPXControlMode.Position, leftSpeed);
-        primaryRightMotor.set(VictorSPXControlMode.Position, rightSpeed);
-    }
-
-    public void initLog() {
-        primaryLeftLogs.addNumber("0 - Voltage", primaryLeftMotor::getBusVoltage);
-        primaryLeftLogs.addNumber("0 - Temperature", primaryLeftMotor::getTemperature);
-        primaryLeftLogs.addNumber("0 - Output Volts", primaryLeftMotor::getMotorOutputVoltage);
-
-        primaryRightLogs.addNumber("1 - Voltage", primaryRightMotor::getBusVoltage);
-        primaryRightLogs.addNumber("1 - Temperature", primaryRightMotor::getTemperature);
-        primaryRightLogs.addNumber("1 - Output Volts", primaryRightMotor::getMotorOutputVoltage);
-
-        secondaryLeftLogs.addNumber("2 - Voltage", secondaryLeftMotor::getBusVoltage);
-        secondaryLeftLogs.addNumber("2 - Temperature", secondaryLeftMotor::getTemperature);
-        secondaryLeftLogs.addNumber("2 - Output Volts", secondaryLeftMotor::getMotorOutputVoltage);
-
-        secondaryRightLogs.addNumber("3 - Voltage", secondaryRightMotor::getBusVoltage);
-        secondaryRightLogs.addNumber("3 - Temperature", secondaryRightMotor::getTemperature);
-        secondaryRightLogs.addNumber("3 - Output Volts", secondaryRightMotor::getMotorOutputVoltage);
+        primaryLeftMotor.set(ControlMode.PercentOutput, leftSpeed);
+        primaryRightMotor.set(ControlMode.PercentOutput, rightSpeed);
     }
 
     public class TankDrive extends CommandBase{
@@ -101,11 +103,6 @@ public class DriveSubsystem extends SubsystemBase
         }
 
         @Override
-        public void initialize() {
-            DriveSubsystem.this.initLog();
-        }
-
-        @Override
         public void execute() {
             DriveSubsystem.this.setSpeed(
                 transformInput(this.leftJoystick.getAsDouble()), 
@@ -113,7 +110,7 @@ public class DriveSubsystem extends SubsystemBase
         }
 
         private double transformInput(double in) {
-            return (in * in) * DriveSubsystem.this.getMaxSpeed();
+            return signum(in) * (in * in) * DriveSubsystem.this.getMaxSpeed();
         }
 
         @Override
