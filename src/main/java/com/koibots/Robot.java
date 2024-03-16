@@ -9,7 +9,6 @@ import java.util.Map;
 
 import com.koibots.subsystems.DriveSubsystem;
 
-import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -19,6 +18,7 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 /**
  * The VM is configured to automatically run this class, and to call the methods corresponding to
@@ -29,7 +29,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 public class Robot extends TimedRobot
 {
     DriveSubsystem driveSubsystem = new DriveSubsystem();
-    PS4Controller controller = new PS4Controller(0);
+    CommandXboxController controller = new CommandXboxController(0);
 
     PowerDistribution pdp = new PowerDistribution(0, ModuleType.kCTRE);
 
@@ -144,7 +144,7 @@ public class Robot extends TimedRobot
         Shuffleboard.startRecording();
 
         driveSubsystem.setDefaultCommand(
-            driveSubsystem.new TankDrive(controller::getLeftY, controller::getRightY)
+            driveSubsystem.new TankDrive(() -> controller.getLeftY(), () -> controller.getRightY())
         );
     }
 

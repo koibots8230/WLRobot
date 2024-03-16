@@ -20,7 +20,7 @@ import static java.lang.Math.signum;
 
 public class DriveSubsystem extends SubsystemBase
 {
-    VictorSPX primaryLeftMotor = new VictorSPX(12);
+    VictorSPX primaryLeftMotor = new VictorSPX(10);
     VictorSPX primaryRightMotor = new VictorSPX(13);
     VictorSPX secondaryLeftMotor = new VictorSPX(14);    
     VictorSPX secondaryRightMotor = new VictorSPX(15);
